@@ -99,6 +99,8 @@ contract VotationManager is IVotationManager {
     }
 
     function _verifyVote(uint256 votationId, uint256 candidateId) internal view returns (bool) {
+        /// TODO: Implementare la logica di verifica del voto
+        return true;
     }
 
     function _checkVotingWindow(uint256 votationId) internal view returns (bool) {
