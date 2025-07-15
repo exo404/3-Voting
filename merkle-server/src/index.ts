@@ -1,64 +1,85 @@
 import express from 'express';
-import fs from 'fs';
+import bodyParser from 'body-parser';
 import path from 'path';
-import { MerkleTree } from 'merkletreejs';
-import crypto from 'crypto';
+import fs from 'fs';
+import { Votation } from './Votation';
+import { DatabaseManager } from './DatabaseManager';
+import dotenv from 'dotenv';
+
+// === SETUP ===
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.API_PORT || 3000;
 
-// === Utility per hash ===
-const hash = (data: string) =>
-  crypto.createHash('sha256').update(data).digest();
+const db = new DatabaseManager();
 
-// === Caricamento votanti ===
-const votersPath = path.join(__dirname, 'data', 'voters.json');
-const voters: string[] = JSON.parse(fs.readFileSync(votersPath, 'utf-8'));
+const treesDir = process.env.TREES_PATH || path.join(__dirname, 'trees');
+if (!fs.existsSync(treesDir)) {
+  fs.mkdirSync(treesDir, { recursive: true });
+}
 
-// === Costruzione Merkle Tree ===
-const leaves = voters.map(v => hash(v));
-const merkleTree = new MerkleTree(leaves, crypto.createHash('sha256'), { sortPairs: true });
-const merkleRoot = merkleTree.getRoot().toString('hex');
+app.use(bodyParser.json())
 
 // === API ===
 
-// Lista votanti
-app.get('/voters', (_req, res) => {
-  res.json(voters);
-});
+app.post("/votations/new", async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      isPublic,
+      startDate,
+      endDate,
+      createdBy,
+      createdAt
+    } = req.body;
 
-// Merkle Root
-app.get('/merkle-root', (_req, res) => {
-  res.json({ merkleRoot });
-});
+    //TODO add candidates
+    //TODO set requisito startDate > creationDate
 
-// Proof per un votante
-app.get('/proof/:address', (req, res) => {
-  const address = req.params.address;
-  const index = voters.indexOf(address);
+    if (!name) {
+      return res.status(400).json({ error: 'Votation name is required' });
+    }
 
-  if (index === -1) {
-    return res.status(404).json({ error: 'Voter not found' });
+    if (!startDate || !endDate) {
+      return res.status(400).json({ error: 'Start date and end date are required' });
+    }
+
+    //TODO change to checkExists method
+    const existingVotation = await db.getVotationByName(name);
+
+    if (existingVotation) {
+      return res.status(400).json({ error: `A votation "${name}" already exists` });
+    }
+
+    const votation = new Votation(
+      name,
+      description,
+      isPublic,
+      startDate,
+      endDate,
+      createdBy,
+      createdAt || new Date(Date.now())
+    );
+
+    const votationId = await votation.save();
+
+    return res.status(201).json({
+      message: `Votation "${votation.name}" created successfully with id "${votationId}"`,
+      votation: votation,
+    });
+  } catch (error: any) {
+    console.error('Error creating votation:', error);
+    return res.status(500).json({ error: error.message || 'Internal server error' });
   }
-
-  const leaf = hash(address);
-  const proof = merkleTree.getProof(leaf);
-
-  res.json({ proof });
 });
 
-// Circuiti zk
-app.get('/circuit/wasm', (_req, res) => {
-  const wasmPath = path.join(__dirname, 'circuits', 'vote.wasm');
-  res.sendFile(wasmPath);
+app.get("/votations/:name", async (req, res) => {
+  //TODO get infos
 });
 
-app.get('/circuit/zkey', (_req, res) => {
-  const zkeyPath = path.join(__dirname, 'circuits', 'vote.zkey');
-  res.sendFile(zkeyPath);
-});
-
-// Avvio server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
