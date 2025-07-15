@@ -10,8 +10,6 @@ import {IVotationManager} from "./interfaces/IVotationManager.sol";
  * @author exo404, simonemontella, valeriooconte
  */
 contract VotationManager is IVotationManager {
-    uint256 private nextElectionId = 1;
-
     /*
      * @notice Mapping che associa l'ID di un'elezione alla sua struttura dati
      * @dev Per memorizzare le elezioni create
@@ -30,12 +28,10 @@ contract VotationManager is IVotationManager {
         if (block.timestamp < _newVotation.startTime || block.timestamp > _newVotation.endTime) revert InvalidTimeInterval();
         if (bytes(_newVotation.name).length == 0) revert InvalidName();
 
-        _newVotation.id = nextElectionId;
         _newVotation.isActive = false;
-        votations[nextElectionId] = _newVotation;
-        nextElectionId++;
+        votations[_newVotation.id] = _newVotation;
 
-        emit VotationCreated(nextElectionId, _newVotation.name, _newVotation.startTime, _newVotation.endTime);
+        emit VotationCreated(_newVotation.id, _newVotation.name, _newVotation.startTime, _newVotation.endTime);
     }
 
     /// @inheritdoc IVotationManager
@@ -56,9 +52,61 @@ contract VotationManager is IVotationManager {
 
         if (votation.id == 0) revert VotationNotFound(votationId);
         if (!votation.isActive) revert VotationNotActive(votationId);
-        if (block.timestamp < votation.startTime || block.timestamp > votation.endTime) revert VotingWindowClosed(votationId);
-        
-        
+        if (!_checkVotingWindow(votationId)) revert VotingWindowClosed(votationId);
+
+        if (!_verifyVote(votationId, candidateId)) revert InvalidVote();
+
+        votationCandidatesVotes[votationId][candidateId] += 1;
+        emit VoteCast(votationId, msg.sender);
     }
 
+    /// @inheritdoc IVotationManager
+    function verifyVote(uint256 votationId, uint256 candidateId) external view returns (bool) {
+        return _verifyVote(votationId, candidateId);
+    }
+
+    /// @inheritdoc IVotationManager
+    function votationResults(uint256 votationId) external view returns (uint256[] memory candidateIds, uint256[] memory votes) {
+        Votation storage votation = votations[votationId];
+
+        if (votation.id == 0) revert VotationNotFound(votationId);
+
+        uint256 candidateCount = votation.candidates.length;
+        uint256 candidateId;
+
+        votes = new uint256[](candidateCount);
+
+        for (uint256 i = 0; i < candidateCount; i++) {
+            candidateId = votation.candidates[i];
+            votes[i] = votationCandidatesVotes[votationId][candidateId];
+        }
+
+        return (votation.candidates, votes);
+    }
+
+    /// @inheritdoc IVotationManager
+    function checkVotingWindow(uint256 votationId) external view returns (bool) {
+        return _checkVotingWindow(votationId);      
+    }
+
+    /// @inheritdoc IVotationManager
+    function getVotation(uint256 votationId) external view returns (Votation memory) {
+        Votation storage votation = votations[votationId];
+
+        if (votation.id == 0) revert VotationNotFound(votationId);
+
+        return votation;
+    }
+
+    function _verifyVote(uint256 votationId, uint256 candidateId) internal view returns (bool) {
+    }
+
+    function _checkVotingWindow(uint256 votationId) internal view returns (bool) {
+        Votation storage votation = votations[votationId];
+
+        if (votation.id == 0) revert VotationNotFound(votationId);
+        if (!votation.isActive) revert VotationNotActive(votationId);
+
+        return (block.timestamp >= votation.startTime && block.timestamp <= votation.endTime);
+    }
 }

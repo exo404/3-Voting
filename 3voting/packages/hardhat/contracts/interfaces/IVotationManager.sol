@@ -26,6 +26,7 @@ interface IVotationManager {
         uint256 startTime;
         uint256 endTime;
         bool isActive;
+        uint256[] candidates; 
     }
 
     ///////////////////// EVENTS /////////////////////
@@ -119,10 +120,8 @@ interface IVotationManager {
     
     /**
      * @notice Errore lanciato quando si esprime un voto non valido
-     * @param votationId ID dell'elezione
-     * @param candidateId ID del candidato per cui il voto non è valido
      */
-    error InvalidVote(uint256 votationId, uint256 candidateId);
+    error InvalidVote();
 
 
     ///////////////////// FUNCTIONS /////////////////////
