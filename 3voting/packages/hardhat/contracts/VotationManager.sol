@@ -23,7 +23,7 @@ contract VotationManager is IVotationManager {
     mapping(uint256 => mapping(uint256 => uint256)) public votationCandidatesVotes;
 
     /// @inheritdoc IVotationManager
-    function createElection(Votation memory _newVotation) external {
+    function createVotation(Votation memory _newVotation) external {
         if (_newVotation.startTime >= _newVotation.endTime) revert InvalidTimeInterval();
         if (block.timestamp < _newVotation.startTime || block.timestamp > _newVotation.endTime) revert InvalidTimeInterval();
         if (bytes(_newVotation.name).length == 0) revert InvalidName();
