@@ -129,12 +129,9 @@ interface IVotationManager {
     /**
      * @notice Crea una nuova elezione
      * @dev La funzione deve verificare che i parametri siano validi e che l'elezione non esista già
-     * @param name Nome descrittivo dell'elezione
-     * @param startTime Timestamp di inizio dell'elezione (deve essere futuro)
-     * @param endTime Timestamp di fine dell'elezione (deve essere dopo startTime)
-     * @return ID univoco dell'elezione creata
+     * @param _newVotation Struttura contenente i dati dell'elezione da creare
      */
-    function createVotation(string memory name, uint256 startTime, uint256 endTime) external returns (uint256);
+    function createVotation(Votation memory _newVotation) external;
 
     /**
      * @notice Chiude un'elezione esistente
@@ -149,8 +146,10 @@ interface IVotationManager {
      *      che il candidato sia valido e che il votante non abbia già votato
      * @param votationId ID dell'elezione per cui votare
      * @param candidateId ID del candidato per cui votare
+     * @param root Radice dell'albero Merkle per la prova di voto
+     * @param nullifierHash Hash del nullificatore per garantire l'unicità del voto
      */
-    function vote(uint256 votationId, uint256 candidateId) external;
+    function vote(uint256 votationId, uint256 candidateId, bytes32 root, bytes32 nullifierHash) external;
 
     /**
      * @notice Verifica se un voto è stato correttamente registrato
