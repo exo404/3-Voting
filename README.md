@@ -2,11 +2,6 @@
 
 ## Doc
 
-valerio
-valeriooconte
-Online
-
-smont — 12:46
 ### Architettura generale
 
 ```mermaid
