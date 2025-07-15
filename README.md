@@ -8,7 +8,7 @@
 sequenceDiagram
   participant Voter
   participant Frontend
-  participant OffChainServer
+  participant MerkleServer
   participant ZKContract
   participant SoulboundRegistry
 
@@ -16,11 +16,11 @@ sequenceDiagram
   Frontend->>SoulboundRegistry: Verifica possesso SBT
   SoulboundRegistry-->>Frontend: true/false
 
-  Frontend->>OffChainServer: Richiede lista voters + root Merkle
-  OffChainServer-->>Frontend: Lista + Merkle Root
+  Frontend->>MerkleServer: Richiede lista voters + root Merkle
+  MerkleServer-->>Frontend: Lista + Merkle Root
 
-  Frontend->>OffChainServer: Richiede circuiti ZK (zkey, wasm)
-  OffChainServer-->>Frontend: Invia zkey + wasm
+  Frontend->>MerkleServer: Richiede circuiti ZK (zkey, wasm)
+  MerkleServer-->>Frontend: Invia zkey + wasm
 
   Frontend->>Frontend: Genera identityCommitment, MerkleProof, nullifierHash
   Frontend->>Frontend: Genera zk-SNARK proof
