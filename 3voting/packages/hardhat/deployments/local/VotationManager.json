@@ -1,0 +1,900 @@
+{
+  "address": "0xA4cD3b0Eb6E5Ab5d8CE4065BcCD70040ADAB1F00",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "candidateId",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidCandidate",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidName",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidTimeInterval",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidVerifierAddress",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidVote",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationAlreadyActive",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationAlreadyExists",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationNotActive",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotingWindowClosed",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "VotationClosed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "VotationStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "voter",
+          "type": "address"
+        }
+      ],
+      "name": "VoteCast",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "voter",
+          "type": "address"
+        }
+      ],
+      "name": "VoteVerified",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkVotingWindow",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "candidates",
+              "type": "uint256[]"
+            }
+          ],
+          "internalType": "struct IVotationManager.Votation",
+          "name": "_newVotation",
+          "type": "tuple"
+        }
+      ],
+      "name": "createVotation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVotation",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "candidates",
+              "type": "uint256[]"
+            }
+          ],
+          "internalType": "struct IVotationManager.Votation",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "startVotation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[2]",
+          "name": "a",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[2][2]",
+          "name": "b",
+          "type": "uint256[2][2]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "c",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[3]",
+          "name": "input",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "address",
+          "name": "verifyContract",
+          "type": "address"
+        }
+      ],
+      "name": "verifyVote",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "votationCandidatesVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        }
+      ],
+      "name": "votationResults",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "candidateIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "votes",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "votations",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "votationId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "candidateId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "a",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[2][2]",
+          "name": "b",
+          "type": "uint256[2][2]"
+        },
+        {
+          "internalType": "uint256[2]",
+          "name": "c",
+          "type": "uint256[2]"
+        },
+        {
+          "internalType": "uint256[3]",
+          "name": "input",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "address",
+          "name": "verifyContract",
+          "type": "address"
+        }
+      ],
+      "name": "vote",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x9fd0c9d7ead280520fcdbc7ecf9713dcd78dacc10f5d917caac4657b50deeacc",
+  "receipt": {
+    "to": null,
+    "from": "0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC",
+    "contractAddress": "0xA4cD3b0Eb6E5Ab5d8CE4065BcCD70040ADAB1F00",
+    "transactionIndex": 0,
+    "gasUsed": "1070003",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x5e753abf80d6d64b37b3e00478c3f6cd9e3287944e7af2912001f8c5cdc16731",
+    "transactionHash": "0x9fd0c9d7ead280520fcdbc7ecf9713dcd78dacc10f5d917caac4657b50deeacc",
+    "logs": [],
+    "blockNumber": 10,
+    "cumulativeGasUsed": "1070003",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "f2c713c34312fd635d44d58e3f552731",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"}],\"name\":\"InvalidCandidate\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidName\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidTimeInterval\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidVerifierAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidVote\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"VotationAlreadyActive\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"VotationAlreadyExists\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"VotationNotActive\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"VotationNotFound\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"VotingWindowClosed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"VotationClosed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"}],\"name\":\"VotationCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"}],\"name\":\"VotationStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"VoteCast\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"VoteVerified\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"checkVotingWindow\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"},{\"internalType\":\"uint256[]\",\"name\":\"candidates\",\"type\":\"uint256[]\"}],\"internalType\":\"struct IVotationManager.Votation\",\"name\":\"_newVotation\",\"type\":\"tuple\"}],\"name\":\"createVotation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"getVotation\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"},{\"internalType\":\"uint256[]\",\"name\":\"candidates\",\"type\":\"uint256[]\"}],\"internalType\":\"struct IVotationManager.Votation\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"startVotation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[2]\",\"name\":\"a\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[2][2]\",\"name\":\"b\",\"type\":\"uint256[2][2]\"},{\"internalType\":\"uint256[2]\",\"name\":\"c\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[3]\",\"name\":\"input\",\"type\":\"uint256[3]\"},{\"internalType\":\"address\",\"name\":\"verifyContract\",\"type\":\"address\"}],\"name\":\"verifyVote\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"votationCandidatesVotes\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"}],\"name\":\"votationResults\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"candidateIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"votes\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"votations\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"votationId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[2]\",\"name\":\"a\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[2][2]\",\"name\":\"b\",\"type\":\"uint256[2][2]\"},{\"internalType\":\"uint256[2]\",\"name\":\"c\",\"type\":\"uint256[2]\"},{\"internalType\":\"uint256[3]\",\"name\":\"input\",\"type\":\"uint256[3]\"},{\"internalType\":\"address\",\"name\":\"verifyContract\",\"type\":\"address\"}],\"name\":\"vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"exo404, simonemontella, valeriooconte\",\"details\":\"Fornisce funzionalit\\u00e0 per creare, chiudere elezioni e gestire i voti\",\"errors\":{\"InvalidCandidate(uint256)\":[{\"params\":{\"candidateId\":\"ID del candidato non valido\"}}],\"VotationAlreadyActive(uint256)\":[{\"params\":{\"votationId\":\"ID dell'elezione gi\\u00e0 attiva\"}}],\"VotationAlreadyExists(uint256)\":[{\"params\":{\"votationId\":\"ID dell'elezione che gi\\u00e0 esiste\"}}],\"VotationNotActive(uint256)\":[{\"params\":{\"votationId\":\"ID dell'elezione non attiva\"}}],\"VotationNotFound(uint256)\":[{\"params\":{\"votationId\":\"Id ID dell'elezione non trovata\"}}],\"VotingWindowClosed(uint256)\":[{\"params\":{\"votationId\":\"ID dell'elezione per cui la finestra di voto \\u00e8 chiusa\"}}]},\"events\":{\"VotationClosed(uint256,string)\":{\"params\":{\"name\":\"Nome dell'elezione chiusa\",\"votationId\":\"ID dell'elezione chiusa\"}},\"VotationCreated(uint256,string,uint256,uint256)\":{\"params\":{\"endTime\":\"Timestamp di fine dell'elezione\",\"name\":\"Nome dell'elezione\",\"startTime\":\"Timestamp di inizio dell'elezione\",\"votationId\":\"ID univoco della nuova elezione\"}},\"VotationStarted(uint256,string,uint256)\":{\"params\":{\"endTime\":\"Timestamp di fine dell'elezione\",\"name\":\"Nome dell'elezione avviata\",\"votationId\":\"ID dell'elezione avviata\"}},\"VoteCast(uint256,address)\":{\"params\":{\"votationId\":\"ID dell'elezione per cui \\u00e8 stato espresso il voto\",\"voter\":\"Indirizzo del votante\"}},\"VoteVerified(uint256,address)\":{\"params\":{\"votationId\":\"ID dell'elezione per cui \\u00e8 stato verificato il voto\",\"voter\":\"Indirizzo del votante verificato\"}}},\"kind\":\"dev\",\"methods\":{\"checkVotingWindow(uint256)\":{\"details\":\"Controlla che l'orario corrente sia tra startTime e endTime e che l'elezione sia attiva\",\"params\":{\"votationId\":\"ID dell'elezione da verificare\"},\"returns\":{\"_0\":\"true se \\u00e8 possibile votare, false altrimenti\"}},\"createVotation((uint256,string,uint256,uint256,bool,uint256[]))\":{\"details\":\"La funzione deve verificare che i parametri siano validi e che l'elezione non esista gi\\u00e0\",\"params\":{\"_newVotation\":\"Struttura contenente i dati dell'elezione da creare\"}},\"getVotation(uint256)\":{\"details\":\"Funzione di sola lettura per ottenere informazioni complete su un'elezione\",\"params\":{\"votationId\":\"ID dell'elezione di cui ottenere i dettagli\"},\"returns\":{\"_0\":\"Votation struct contenente tutti i dati dell'elezione\"}},\"startVotation(uint256)\":{\"details\":\"Deve verificare che l'elezione sia attiva e che l'ID sia valido\",\"params\":{\"votationId\":\"ID dell'elezione da chiudere\"}},\"verifyVote(uint256[2],uint256[2][2],uint256[2],uint256[3],address)\":{\"details\":\"Funzione di sola lettura per verificare l'integrit\\u00e0 del voto\",\"params\":{\"a\":\"Parametro della prova zk-SNARK\",\"b\":\"Parametro della prova zk-SNARK\",\"c\":\"Parametro della prova zk-SNARK\",\"input\":\"Input della prova zk-SNARK\",\"verifyContract\":\"Indirizzo del contratto di verifica della prova zk-SN\"},\"returns\":{\"_0\":\"true se il voto \\u00e8 valido e correttamente registrato, false altrimenti\"}},\"votationResults(uint256)\":{\"details\":\"Pu\\u00f2 essere chiamata solo per elezioni esistenti\",\"params\":{\"votationId\":\"ID dell'elezione di cui ottenere i risultati\"},\"returns\":{\"candidateIds\":\"Array degli ID dei candidati\",\"votes\":\"Array del numero di voti ricevuti da ciascun candidato (stesso ordine di candidateIds)\"}},\"vote(uint256,uint256,uint256[2],uint256[2][2],uint256[2],uint256[3],address)\":{\"details\":\"Deve verificare che l'elezione sia attiva, che sia nella finestra temporale corretta,      che il candidato sia valido e che il votante non abbia gi\\u00e0 votato\",\"params\":{\"a\":\"Parametro della prova zk-SNARK\",\"b\":\"Parametro della prova zk-SNARK\",\"c\":\"Parametro della prova zk-SNARK\",\"candidateId\":\"ID del candidato per cui votare\",\"input\":\"Input della prova zk-SNARK\",\"verifyContract\":\"Indirizzo del contratto di verifica della prova zk-SN\",\"votationId\":\"ID dell'elezione per cui votare\"}}},\"stateVariables\":{\"votationCandidatesVotes\":{\"details\":\"Per memorizzare i risultati delle elezioni\"}},\"title\":\"VotationManager\",\"version\":1},\"userdoc\":{\"errors\":{\"InvalidCandidate(uint256)\":[{\"notice\":\"Errore lanciato quando si specifica un candidato non valido\"}],\"InvalidName()\":[{\"notice\":\"Errore lanciato quando si tenta di creare un'elezione con un nome vuoto\"}],\"InvalidTimeInterval()\":[{\"notice\":\"Errore lanciato quando si tenta di creare un'elezione con un intervallo di tempo non valido\"}],\"InvalidVerifierAddress()\":[{\"notice\":\"Errore lanciato se tenta la verifica di un voto con un contratto di verifica non valido\"}],\"InvalidVote()\":[{\"notice\":\"Errore lanciato quando si esprime un voto non valido\"}],\"VotationAlreadyActive(uint256)\":[{\"notice\":\"Errore lanciato quando si tenta di avviare un'elezione gi\\u00e0 attiva\"}],\"VotationAlreadyExists(uint256)\":[{\"notice\":\"Errore lanciato quando si tenta di creare un'elezione con ID gi\\u00e0 esistente\"}],\"VotationNotActive(uint256)\":[{\"notice\":\"Errore lanciato quando si tenta di operare su un'elezione non attiva\"}],\"VotationNotFound(uint256)\":[{\"notice\":\"Errore lanciato quando si tenta di accedere a un'elezione inesistente\"}],\"VotingWindowClosed(uint256)\":[{\"notice\":\"Errore lanciato quando si tenta di votare fuori dalla finestra temporale consentita\"}]},\"events\":{\"VotationClosed(uint256,string)\":{\"notice\":\"Emesso quando un'elezione viene chiusa\"},\"VotationCreated(uint256,string,uint256,uint256)\":{\"notice\":\"Emesso quando viene creata una nuova elezione\"},\"VotationStarted(uint256,string,uint256)\":{\"notice\":\"Emesso quando un'elezione viene avviata\"},\"VoteCast(uint256,address)\":{\"notice\":\"Emesso quando un voto viene registrato\"},\"VoteVerified(uint256,address)\":{\"notice\":\"Emesso quando un voto viene verificato con successo\"}},\"kind\":\"user\",\"methods\":{\"checkVotingWindow(uint256)\":{\"notice\":\"Verifica se una elezione \\u00e8 attualmente nella finestra temporale di voto\"},\"createVotation((uint256,string,uint256,uint256,bool,uint256[]))\":{\"notice\":\"Crea una nuova elezione\"},\"getVotation(uint256)\":{\"notice\":\"Restituisce i dettagli di un'elezione specifica\"},\"startVotation(uint256)\":{\"notice\":\"Chiude un'elezione esistente\"},\"verifyVote(uint256[2],uint256[2][2],uint256[2],uint256[3],address)\":{\"notice\":\"Verifica se un voto \\u00e8 stato correttamente registrato\"},\"votationCandidatesVotes(uint256,uint256)\":{\"notice\":\"Mapping che associa l'ID di un'elezione al numero di voti per ciascun candidato\"},\"votationResults(uint256)\":{\"notice\":\"Restituisce i risultati di un'elezione\"},\"vote(uint256,uint256,uint256[2],uint256[2][2],uint256[2],uint256[3],address)\":{\"notice\":\"Esprime un voto per un candidato in una specifica elezione\"}},\"notice\":\"Implementazione dell'interfaccia IVotationManager per la gestione delle elezioni\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/VotationManager.sol\":\"VotationManager\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/VotationManager.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport {IVotationManager} from \\\"./interfaces/IVotationManager.sol\\\";\\nimport {Groth16Verifier} from \\\"./verifier.sol\\\";\\n\\n/**\\n * @title VotationManager\\n * @notice Implementazione dell'interfaccia IVotationManager per la gestione delle elezioni\\n * @dev Fornisce funzionalit\\u00e0 per creare, chiudere elezioni e gestire i voti\\n * @author exo404, simonemontella, valeriooconte\\n */\\ncontract VotationManager is IVotationManager {\\n    /*\\n     * @notice Mapping che associa l'ID di un'elezione alla sua struttura dati\\n     * @dev Per memorizzare le elezioni create\\n     */\\n    mapping(uint256 => Votation) public votations;\\n\\n    /**\\n     * @notice Mapping che associa l'ID di un'elezione al numero di voti per ciascun candidato\\n     * @dev Per memorizzare i risultati delle elezioni\\n     */\\n    mapping(uint256 => mapping(uint256 => uint256)) public votationCandidatesVotes;\\n\\n    /// @inheritdoc IVotationManager\\n    function createVotation(Votation memory _newVotation) external {\\n        if (_newVotation.startTime >= _newVotation.endTime) revert InvalidTimeInterval();\\n        if (block.timestamp < _newVotation.startTime || block.timestamp > _newVotation.endTime) revert InvalidTimeInterval();\\n        if (bytes(_newVotation.name).length == 0) revert InvalidName();\\n\\n        _newVotation.isActive = false;\\n        votations[_newVotation.id] = _newVotation;\\n\\n        emit VotationCreated(_newVotation.id, _newVotation.name, _newVotation.startTime, _newVotation.endTime);\\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function startVotation(uint256 votationId) external {\\n        Votation storage votation = votations[votationId];\\n\\n        if (votation.id == 0) revert VotationNotFound(votationId);\\n        if (votation.isActive) revert VotationAlreadyActive(votationId);\\n\\n        votations[votationId].isActive = true;\\n\\n        emit VotationStarted(votationId, votation.name, votation.endTime);\\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function vote(\\n    uint256 votationId, uint256 candidateId, \\n    uint[2] calldata a,\\n    uint[2][2] calldata b,\\n    uint[2] calldata c,\\n    uint[3] calldata input,\\n    address verifyContract\\n    ) external {\\n        Votation storage votation = votations[votationId];\\n\\n        if (votation.id == 0) revert VotationNotFound(votationId);\\n        if (!votation.isActive) revert VotationNotActive(votationId);\\n        if (!_checkVotingWindow(votationId)) revert VotingWindowClosed(votationId);\\n\\n        if (!_verifyVote(a, b, c, input, verifyContract)) revert InvalidVote();\\n\\n        votationCandidatesVotes[votationId][candidateId] += 1;\\n        emit VoteCast(votationId, msg.sender);\\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function verifyVote(\\n        uint[2] calldata a,\\n        uint[2][2] calldata b,\\n        uint[2] calldata c,\\n        uint[3] calldata input,\\n        address verifyContract\\n    ) external view returns (bool) {\\n        return _verifyVote(a, b, c, input, verifyContract);\\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function votationResults(uint256 votationId) external view returns (uint256[] memory candidateIds, uint256[] memory votes) {\\n        Votation storage votation = votations[votationId];\\n\\n        if (votation.id == 0) revert VotationNotFound(votationId);\\n\\n        uint256 candidateCount = votation.candidates.length;\\n        uint256 candidateId;\\n\\n        votes = new uint256[](candidateCount);\\n\\n        for (uint256 i = 0; i < candidateCount; i++) {\\n            candidateId = votation.candidates[i];\\n            votes[i] = votationCandidatesVotes[votationId][candidateId];\\n        }\\n\\n        return (votation.candidates, votes);\\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function checkVotingWindow(uint256 votationId) external view returns (bool) {\\n        return _checkVotingWindow(votationId);      \\n    }\\n\\n    /// @inheritdoc IVotationManager\\n    function getVotation(uint256 votationId) external view returns (Votation memory) {\\n        Votation storage votation = votations[votationId];\\n\\n        if (votation.id == 0) revert VotationNotFound(votationId);\\n\\n        return votation;\\n    }\\n\\n    function _verifyVote(\\n        uint[2] calldata a,\\n        uint[2][2] calldata b,\\n        uint[2] calldata c,\\n        uint[3] calldata input,\\n        address verifyContract\\n    ) internal view returns (bool) {\\n        if (verifyContract == address(0)) revert InvalidVerifierAddress();\\n        Groth16Verifier verifier = Groth16Verifier(verifyContract);\\n        return verifier.verifyProof(a, b, c, input);\\n    }\\n\\n    function _checkVotingWindow(uint256 votationId) internal view returns (bool) {\\n        Votation storage votation = votations[votationId];\\n\\n        if (votation.id == 0) revert VotationNotFound(votationId);\\n        if (!votation.isActive) revert VotationNotActive(votationId);\\n\\n        return (block.timestamp >= votation.startTime && block.timestamp <= votation.endTime);\\n    }\\n}\",\"keccak256\":\"0xe9e68859aa15306ca05e9b5d661e013ebffa4b7413356489ec4b4edcdc6d0d27\",\"license\":\"MIT\"},\"contracts/interfaces/IVotationManager.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\n/**\\n * @title IVotationManager\\n * @notice Interfaccia per la gestione di elezioni decentralizzate\\n * @dev Definisce le funzionalit\\u00e0 core per creare elezioni, gestire i voti e verificare i risultati\\n  * @author exo404, simonemontella, valeriooconte\\n */\\ninterface IVotationManager {\\n\\n    ///////////////////// DATA STRUCTURES /////////////////////\\n    \\n    /**\\n     * @notice Struttura che rappresenta un'elezione\\n     * @dev Contiene tutti i dati necessari per identificare e gestire un'elezione\\n     * @param id ID univoco dell'elezione\\n     * @param name Nome descrittivo dell'elezione\\n     * @param startTime Timestamp di inizio dell'elezione\\n     * @param endTime Timestamp di fine dell'elezione\\n     * @param isActive Stato dell'elezione\\n     */\\n    struct Votation {\\n        uint256 id;\\n        string name;\\n        uint256 startTime;\\n        uint256 endTime;\\n        bool isActive;\\n        uint256[] candidates; \\n    }\\n\\n    ///////////////////// EVENTS /////////////////////\\n\\n    /**\\n     * @notice Emesso quando viene creata una nuova elezione\\n     * @param votationId ID univoco della nuova elezione\\n     * @param name Nome dell'elezione\\n     * @param startTime Timestamp di inizio dell'elezione\\n     * @param endTime Timestamp di fine dell'elezione\\n     */\\n    event VotationCreated(uint256 indexed votationId, string name, uint256 startTime, uint256 endTime);\\n\\n    /**\\n     * @notice Emesso quando un'elezione viene avviata\\n     * @param votationId ID dell'elezione avviata\\n     * @param name Nome dell'elezione avviata\\n     * @param endTime Timestamp di fine dell'elezione\\n     */\\n    event VotationStarted(uint256 indexed votationId, string name, uint256 endTime);\\n\\n    /**\\n     * @notice Emesso quando un'elezione viene chiusa\\n     * @param votationId ID dell'elezione chiusa\\n     * @param name Nome dell'elezione chiusa\\n     */\\n    event VotationClosed(uint256 indexed votationId, string name);\\n\\n    /**\\n     * @notice Emesso quando un voto viene registrato\\n     * @param votationId ID dell'elezione per cui \\u00e8 stato espresso il voto\\n     * @param voter Indirizzo del votante\\n     */\\n    event VoteCast(uint256 indexed votationId, address indexed voter);\\n    \\n    /**\\n     * @notice Emesso quando un voto viene verificato con successo\\n     * @param votationId ID dell'elezione per cui \\u00e8 stato verificato il voto\\n     * @param voter Indirizzo del votante verificato\\n     */\\n    event VoteVerified(uint256 indexed votationId, address indexed voter);\\n\\n    \\n    ///////////////////// ERRORS /////////////////////\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di creare un'elezione con ID gi\\u00e0 esistente\\n     * @param votationId ID dell'elezione che gi\\u00e0 esiste\\n     */\\n    error VotationAlreadyExists(uint256 votationId);\\n    \\n    /**\\n     * @notice Errore lanciato quando si tenta di accedere a un'elezione inesistente\\n     * @param votationId Id ID dell'elezione non trovata\\n     */\\n    error VotationNotFound(uint256 votationId);\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di avviare un'elezione gi\\u00e0 attiva\\n     * @param votationId ID dell'elezione gi\\u00e0 attiva\\n     */\\n    error VotationAlreadyActive(uint256 votationId);\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di operare su un'elezione non attiva\\n     * @param votationId ID dell'elezione non attiva\\n     */\\n    error VotationNotActive(uint256 votationId);\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di creare un'elezione con un intervallo di tempo non valido\\n     */\\n    error InvalidTimeInterval();\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di creare un'elezione con un nome vuoto\\n     */\\n    error InvalidName();\\n\\n    /**\\n     * @notice Errore lanciato quando si tenta di votare fuori dalla finestra temporale consentita\\n     * @param votationId ID dell'elezione per cui la finestra di voto \\u00e8 chiusa\\n     */\\n    error VotingWindowClosed(uint256 votationId);\\n    \\n    /**\\n     * @notice Errore lanciato quando si specifica un candidato non valido\\n     * @param candidateId ID del candidato non valido\\n     */\\n    error InvalidCandidate(uint256 candidateId);\\n    \\n    /**\\n     * @notice Errore lanciato quando si esprime un voto non valido\\n     */\\n    error InvalidVote();\\n\\n    /**\\n     * @notice Errore lanciato se tenta la verifica di un voto con un contratto di verifica non valido\\n     */\\n    error InvalidVerifierAddress();\\n\\n\\n    ///////////////////// FUNCTIONS /////////////////////\\n\\n    /**\\n     * @notice Crea una nuova elezione\\n     * @dev La funzione deve verificare che i parametri siano validi e che l'elezione non esista gi\\u00e0\\n     * @param _newVotation Struttura contenente i dati dell'elezione da creare\\n     */\\n    function createVotation(Votation memory _newVotation) external;\\n\\n    /**\\n     * @notice Chiude un'elezione esistente\\n     * @dev Deve verificare che l'elezione sia attiva e che l'ID sia valido\\n     * @param votationId ID dell'elezione da chiudere\\n     */\\n    function startVotation(uint256 votationId) external;\\n\\n    /**\\n     * @notice Esprime un voto per un candidato in una specifica elezione\\n     * @dev Deve verificare che l'elezione sia attiva, che sia nella finestra temporale corretta,\\n     *      che il candidato sia valido e che il votante non abbia gi\\u00e0 votato\\n     * @param votationId ID dell'elezione per cui votare\\n     * @param candidateId ID del candidato per cui votare\\n     * @param a Parametro della prova zk-SNARK\\n     * @param b Parametro della prova zk-SNARK\\n     * @param c Parametro della prova zk-SNARK\\n     * @param input Input della prova zk-SNARK\\n     * @param verifyContract Indirizzo del contratto di verifica della prova zk-SN\\n     */\\n    function vote(\\n    uint256 votationId, uint256 candidateId,\\n    uint[2] calldata a,\\n    uint[2][2] calldata b,\\n    uint[2] calldata c,\\n    uint[3] calldata input,\\n    address verifyContract\\n    ) external;\\n\\n    /**\\n     * @notice Verifica se un voto \\u00e8 stato correttamente registrato\\n     * @dev Funzione di sola lettura per verificare l'integrit\\u00e0 del voto\\n     * @param a Parametro della prova zk-SNARK\\n     * @param b Parametro della prova zk-SNARK\\n     * @param c Parametro della prova zk-SNARK\\n     * @param input Input della prova zk-SNARK\\n     * @param verifyContract Indirizzo del contratto di verifica della prova zk-SN\\n     * @return true se il voto \\u00e8 valido e correttamente registrato, false altrimenti\\n     */\\n    function verifyVote(    \\n    uint[2] calldata a,\\n    uint[2][2] calldata b,\\n    uint[2] calldata c,\\n    uint[3] calldata input,\\n    address verifyContract) external view returns (bool);\\n\\n    /**\\n     * @notice Restituisce i risultati di un'elezione\\n     * @dev Pu\\u00f2 essere chiamata solo per elezioni esistenti\\n     * @param votationId ID dell'elezione di cui ottenere i risultati\\n     * @return candidateIds Array degli ID dei candidati\\n     * @return votes Array del numero di voti ricevuti da ciascun candidato (stesso ordine di candidateIds)\\n     */\\n    function votationResults(uint256 votationId) external view returns (uint256[] memory candidateIds, uint256[] memory votes);\\n\\n    /**\\n     * @notice Verifica se una elezione \\u00e8 attualmente nella finestra temporale di voto\\n     * @dev Controlla che l'orario corrente sia tra startTime e endTime e che l'elezione sia attiva\\n     * @param votationId ID dell'elezione da verificare\\n     * @return true se \\u00e8 possibile votare, false altrimenti\\n     */\\n    function checkVotingWindow(uint256 votationId) external view returns (bool);\\n\\n    /**\\n     * @notice Restituisce i dettagli di un'elezione specifica\\n     * @dev Funzione di sola lettura per ottenere informazioni complete su un'elezione\\n     * @param votationId ID dell'elezione di cui ottenere i dettagli\\n     * @return Votation struct contenente tutti i dati dell'elezione\\n     */\\n    function getVotation(uint256 votationId) external view returns (Votation memory);\\n}\",\"keccak256\":\"0x4b48e5b7fdfd3d359c1b402f3eae5ee20e0fdd76495891e437bf0a75044b5cc2\",\"license\":\"MIT\"},\"contracts/verifier.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\n/*\\n    Copyright 2021 0KIMS association.\\n\\n    This file is generated with [snarkJS](https://github.com/iden3/snarkjs).\\n\\n    snarkJS is a free software: you can redistribute it and/or modify it\\n    under the terms of the GNU General Public License as published by\\n    the Free Software Foundation, either version 3 of the License, or\\n    (at your option) any later version.\\n\\n    snarkJS is distributed in the hope that it will be useful, but WITHOUT\\n    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\\n    or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public\\n    License for more details.\\n\\n    You should have received a copy of the GNU General Public License\\n    along with snarkJS. If not, see <https://www.gnu.org/licenses/>.\\n*/\\n\\npragma solidity >=0.7.0 <0.9.0;\\n\\ncontract Groth16Verifier {\\n    // Scalar field size\\n    uint256 constant r    = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\\n    // Base field size\\n    uint256 constant q   = 21888242871839275222246405745257275088696311157297823662689037894645226208583;\\n\\n    // Verification Key data\\n    uint256 constant alphax  = 20491192805390485299153009773594534940189261866228447918068658471970481763042;\\n    uint256 constant alphay  = 9383485363053290200918347156157836566562967994039712273449902621266178545958;\\n    uint256 constant betax1  = 4252822878758300859123897981450591353533073413197771768651442665752259397132;\\n    uint256 constant betax2  = 6375614351688725206403948262868962793625744043794305715222011528459656738731;\\n    uint256 constant betay1  = 21847035105528745403288232691147584728191162732299865338377159692350059136679;\\n    uint256 constant betay2  = 10505242626370262277552901082094356697409835680220590971873171140371331206856;\\n    uint256 constant gammax1 = 11559732032986387107991004021392285783925812861821192530917403151452391805634;\\n    uint256 constant gammax2 = 10857046999023057135944570762232829481370756359578518086990519993285655852781;\\n    uint256 constant gammay1 = 4082367875863433681332203403145435568316851327593401208105741076214120093531;\\n    uint256 constant gammay2 = 8495653923123431417604973247489272438418190587263600148770280649306958101930;\\n    uint256 constant deltax1 = 18175675595163848758984695984219199250058529412191788787489038604522751662180;\\n    uint256 constant deltax2 = 3193422583918397487593575066156270343425625293339149546692140626625999080158;\\n    uint256 constant deltay1 = 17797080033332088019214997634942647620600327345744630304758599316692834572183;\\n    uint256 constant deltay2 = 7067596232964131616445083656778252446771494634867421522112705555047565787990;\\n\\n    \\n    uint256 constant IC0x = 3214699294573097669377599346337205815820690075877834070934071518673753970360;\\n    uint256 constant IC0y = 82009830299263198854804928752421322214133922922685759153773591847960422781;\\n    \\n \\n    // Memory data\\n    uint16 constant pVk = 0;\\n    uint16 constant pPairing = 128;\\n\\n    uint16 constant pLastMem = 896;\\n\\n    function verifyProof(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[3] calldata _pubSignals) public view returns (bool) {\\n        assembly {\\n            function checkField(v) {\\n                if iszero(lt(v, r)) {\\n                    mstore(0, 0)\\n                    return(0, 0x20)\\n                }\\n            }\\n            \\n            // G1 function to multiply a G1 value(x,y) to value in an address\\n            function g1_mulAccC(pR, x, y, s) {\\n                let success\\n                let mIn := mload(0x40)\\n                mstore(mIn, x)\\n                mstore(add(mIn, 32), y)\\n                mstore(add(mIn, 64), s)\\n\\n                success := staticcall(sub(gas(), 2000), 7, mIn, 96, mIn, 64)\\n\\n                if iszero(success) {\\n                    mstore(0, 0)\\n                    return(0, 0x20)\\n                }\\n\\n                mstore(add(mIn, 64), mload(pR))\\n                mstore(add(mIn, 96), mload(add(pR, 32)))\\n\\n                success := staticcall(sub(gas(), 2000), 6, mIn, 128, pR, 64)\\n\\n                if iszero(success) {\\n                    mstore(0, 0)\\n                    return(0, 0x20)\\n                }\\n            }\\n\\n            function checkPairing(pA, pB, pC, pubSignals, pMem) -> isOk {\\n                let _pPairing := add(pMem, pPairing)\\n                let _pVk := add(pMem, pVk)\\n\\n                mstore(_pVk, IC0x)\\n                mstore(add(_pVk, 32), IC0y)\\n\\n                // Compute the linear combination vk_x\\n                \\n\\n                // -A\\n                mstore(_pPairing, calldataload(pA))\\n                mstore(add(_pPairing, 32), mod(sub(q, calldataload(add(pA, 32))), q))\\n\\n                // B\\n                mstore(add(_pPairing, 64), calldataload(pB))\\n                mstore(add(_pPairing, 96), calldataload(add(pB, 32)))\\n                mstore(add(_pPairing, 128), calldataload(add(pB, 64)))\\n                mstore(add(_pPairing, 160), calldataload(add(pB, 96)))\\n\\n                // alpha1\\n                mstore(add(_pPairing, 192), alphax)\\n                mstore(add(_pPairing, 224), alphay)\\n\\n                // beta2\\n                mstore(add(_pPairing, 256), betax1)\\n                mstore(add(_pPairing, 288), betax2)\\n                mstore(add(_pPairing, 320), betay1)\\n                mstore(add(_pPairing, 352), betay2)\\n\\n                // vk_x\\n                mstore(add(_pPairing, 384), mload(add(pMem, pVk)))\\n                mstore(add(_pPairing, 416), mload(add(pMem, add(pVk, 32))))\\n\\n\\n                // gamma2\\n                mstore(add(_pPairing, 448), gammax1)\\n                mstore(add(_pPairing, 480), gammax2)\\n                mstore(add(_pPairing, 512), gammay1)\\n                mstore(add(_pPairing, 544), gammay2)\\n\\n                // C\\n                mstore(add(_pPairing, 576), calldataload(pC))\\n                mstore(add(_pPairing, 608), calldataload(add(pC, 32)))\\n\\n                // delta2\\n                mstore(add(_pPairing, 640), deltax1)\\n                mstore(add(_pPairing, 672), deltax2)\\n                mstore(add(_pPairing, 704), deltay1)\\n                mstore(add(_pPairing, 736), deltay2)\\n\\n\\n                let success := staticcall(sub(gas(), 2000), 8, _pPairing, 768, _pPairing, 0x20)\\n\\n                isOk := and(success, mload(_pPairing))\\n            }\\n\\n            let pMem := mload(0x40)\\n            mstore(0x40, add(pMem, pLastMem))\\n\\n            // Validate that all evaluations \\u2208 F\\n            \\n\\n            // Validate all evaluations\\n            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)\\n\\n            mstore(0, isValid)\\n             return(0, 0x20)\\n         }\\n     }\\n }\\n\",\"keccak256\":\"0x74211845d40944b778a2afca00814eda67e379e86238dff908bba7ff8dbf7626\",\"license\":\"GPL-3.0\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50611264806100206000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c80636523cfc9116100665780636523cfc9146101335780637818c98f1461015757806384ed62301461016a578063d154213d1461017d578063e09648af1461019057600080fd5b8063234f24ad14610098578063242673da146100c257806353c45032146100d75780635f1829a914610110575b600080fd5b6100ab6100a6366004610a45565b6101b0565b6040516100b9929190610a99565b60405180910390f35b6100d56100d0366004610c3d565b610315565b005b6101026100e5366004610cfd565b600160209081526000928352604080842090915290825290205481565b6040519081526020016100b9565b61012361011e366004610d69565b610462565b60405190151581526020016100b9565b610146610141366004610a45565b61047b565b6040516100b9959493929190610e1b565b610123610165366004610a45565b610537565b6100d5610178366004610a45565b610548565b6100d561018b366004610e53565b61060a565b6101a361019e366004610a45565b61071e565b6040516100b99190610ed3565b6000818152602081905260408120805460609283929190036101ed576040516357f6a85960e11b8152600481018590526024015b60405180910390fd5b600581015460008167ffffffffffffffff81111561020d5761020d610ac7565b604051908082528060200260200182016040528015610236578160200160208202803683370190505b50935060005b828110156102b15783600501818154811061025957610259610f6b565b600091825260208083209091015489835260018252604080842082855290925291205486519193509086908390811061029457610294610f6b565b6020908102919091010152806102a981610f97565b91505061023c565b5082600501848180548060200260200160405190810160405280929190818152602001828054801561030257602002820191906000526020600020905b8154815260200190600101908083116102ee575b5050505050915094509450505050915091565b806060015181604001511061033d5760405163f2a4008360e01b815260040160405180910390fd5b80604001514210806103525750806060015142115b156103705760405163f2a4008360e01b815260040160405180910390fd5b8060200151516000036103965760405163430f13b360e01b815260040160405180910390fd5b6000608082018190528151815260208181526040909120825181559082015182919060018201906103c79082611039565b506040820151600282015560608201516003820155608082015160048201805460ff191691151591909117905560a0820151805161040f9160058401916020909101906109e5565b5090505080600001517fdbbd7542af265cd88d18543dffe1513f1a929a26c6c7b57cff49b6f68ad8252b826020015183604001518460600151604051610457939291906110f9565b60405180910390a250565b600061047186868686866108c3565b9695505050505050565b6000602081905290815260409020805460018201805491929161049d90610fb0565b80601f01602080910402602001604051908101604052809291908181526020018280546104c990610fb0565b80156105165780601f106104eb57610100808354040283529160200191610516565b820191906000526020600020905b8154815290600101906020018083116104f957829003601f168201915b50505050600283015460038401546004909401549293909290915060ff1685565b60006105428261096c565b92915050565b6000818152602081905260408120805490910361057b576040516357f6a85960e11b8152600481018390526024016101e4565b600481015460ff16156105a4576040516310aea97f60e21b8152600481018390526024016101e4565b60008281526020819052604090819020600401805460ff191660019081179091556003830154915184927f4d311478d046dff7d9f8e1af204c60f6a75e69156a06335837f86c2b70f9ad8a926105fe92908601919061111e565b60405180910390a25050565b6000878152602081905260408120805490910361063d576040516357f6a85960e11b8152600481018990526024016101e4565b600481015460ff16610665576040516368071bfb60e01b8152600481018990526024016101e4565b61066e8861096c565b61068e5760405163c5e4a59760e01b8152600481018990526024016101e4565b61069b86868686866108c3565b6106b857604051636aee863360e11b815260040160405180910390fd5b60008881526001602081815260408084208b855290915282208054919290916106e29084906111b2565b9091555050604051339089907ff1003b73c437642c0460aee9cd9628b0b8c447b66e6c7c905531b9c644214a1190600090a35050505050505050565b6107596040518060c0016040528060008152602001606081526020016000815260200160008152602001600015158152602001606081525090565b6000828152602081905260408120805490910361078c576040516357f6a85960e11b8152600481018490526024016101e4565b806040518060c0016040529081600082015481526020016001820180546107b290610fb0565b80601f01602080910402602001604051908101604052809291908181526020018280546107de90610fb0565b801561082b5780601f106108005761010080835404028352916020019161082b565b820191906000526020600020905b81548152906001019060200180831161080e57829003601f168201915b5050505050815260200160028201548152602001600382015481526020016004820160009054906101000a900460ff16151515158152602001600582018054806020026020016040519081016040528092919081815260200182805480156108b257602002820191906000526020600020905b81548152602001906001019080831161089e575b505050505081525050915050919050565b60006001600160a01b0382166108ec5760405163043103a360e21b815260040160405180910390fd5b6040516308a3cff560e11b815282906001600160a01b038216906311479fea90610920908a908a908a908a906004016111c5565b602060405180830381865afa15801561093d573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906109619190611211565b979650505050505050565b60008181526020819052604081208054820361099e576040516357f6a85960e11b8152600481018490526024016101e4565b600481015460ff166109c6576040516368071bfb60e01b8152600481018490526024016101e4565b806002015442101580156109de575080600301544211155b9392505050565b828054828255906000526020600020908101928215610a20579160200282015b82811115610a20578251825591602001919060010190610a05565b50610a2c929150610a30565b5090565b5b80821115610a2c5760008155600101610a31565b600060208284031215610a5757600080fd5b5035919050565b600081518084526020808501945080840160005b83811015610a8e57815187529582019590820190600101610a72565b509495945050505050565b604081526000610aac6040830185610a5e565b8281036020840152610abe8185610a5e565b95945050505050565b634e487b7160e01b600052604160045260246000fd5b60405160c0810167ffffffffffffffff81118282101715610b0057610b00610ac7565b60405290565b604051601f8201601f1916810167ffffffffffffffff81118282101715610b2f57610b2f610ac7565b604052919050565b600082601f830112610b4857600080fd5b813567ffffffffffffffff811115610b6257610b62610ac7565b610b75601f8201601f1916602001610b06565b818152846020838601011115610b8a57600080fd5b816020850160208301376000918101602001919091529392505050565b8015158114610bb557600080fd5b50565b8035610bc381610ba7565b919050565b600082601f830112610bd957600080fd5b8135602067ffffffffffffffff821115610bf557610bf5610ac7565b8160051b610c04828201610b06565b9283528481018201928281019087851115610c1e57600080fd5b83870192505b8483101561096157823582529183019190830190610c24565b600060208284031215610c4f57600080fd5b813567ffffffffffffffff80821115610c6757600080fd5b9083019060c08286031215610c7b57600080fd5b610c83610add565b82358152602083013582811115610c9957600080fd5b610ca587828601610b37565b6020830152506040830135604082015260608301356060820152610ccb60808401610bb8565b608082015260a083013582811115610ce257600080fd5b610cee87828601610bc8565b60a08301525095945050505050565b60008060408385031215610d1057600080fd5b50508035926020909101359150565b806040810183101561054257600080fd5b806080810183101561054257600080fd5b806060810183101561054257600080fd5b80356001600160a01b0381168114610bc357600080fd5b60008060008060006101808688031215610d8257600080fd5b610d8c8787610d1f565b9450610d9b8760408801610d30565b9350610daa8760c08801610d1f565b9250610dba876101008801610d41565b9150610dc96101608701610d52565b90509295509295909350565b6000815180845260005b81811015610dfb57602081850181015186830182015201610ddf565b506000602082860101526020601f19601f83011685010191505092915050565b85815260a060208201526000610e3460a0830187610dd5565b6040830195909552506060810192909252151560809091015292915050565b60008060008060008060006101c0888a031215610e6f57600080fd5b8735965060208801359550610e878960408a01610d1f565b9450610e968960808a01610d30565b9350610ea6896101008a01610d1f565b9250610eb6896101408a01610d41565b9150610ec56101a08901610d52565b905092959891949750929550565b600060208083528351818401528084015160c06040850152610ef860e0850182610dd5565b905060408501516060850152606085015160808501526080850151151560a085015260a0850151601f198583030160c086015281815180845284840191508483019350600092505b80831015610f605783518252928401926001929092019190840190610f40565b509695505050505050565b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b600060018201610fa957610fa9610f81565b5060010190565b600181811c90821680610fc457607f821691505b602082108103610fe457634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561103457600081815260208120601f850160051c810160208610156110115750805b601f850160051c820191505b818110156110305782815560010161101d565b5050505b505050565b815167ffffffffffffffff81111561105357611053610ac7565b611067816110618454610fb0565b84610fea565b602080601f83116001811461109c57600084156110845750858301515b600019600386901b1c1916600185901b178555611030565b600085815260208120601f198616915b828110156110cb578886015182559484019460019091019084016110ac565b50858210156110e95787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b60608152600061110c6060830186610dd5565b60208301949094525060400152919050565b60408152600080845461113081610fb0565b8060408601526060600180841660008114611152576001811461116c5761119d565b60ff1985168884015283151560051b88018301955061119d565b8960005260208060002060005b868110156111945781548b8201870152908401908201611179565b8a018501975050505b50505050506020929092019290925292915050565b8082018082111561054257610542610f81565b61016081016040808784378083018660005b60028110156111f4578382843791830191908301906001016111d7565b505050808560c08501375060608361010084013795945050505050565b60006020828403121561122357600080fd5b81516109de81610ba756fea26469706673582212203be6debe642ed6a9350c1e8c3310294039caea56ff4f1db10131ac81f3fbaa3d64736f6c63430008140033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100935760003560e01c80636523cfc9116100665780636523cfc9146101335780637818c98f1461015757806384ed62301461016a578063d154213d1461017d578063e09648af1461019057600080fd5b8063234f24ad14610098578063242673da146100c257806353c45032146100d75780635f1829a914610110575b600080fd5b6100ab6100a6366004610a45565b6101b0565b6040516100b9929190610a99565b60405180910390f35b6100d56100d0366004610c3d565b610315565b005b6101026100e5366004610cfd565b600160209081526000928352604080842090915290825290205481565b6040519081526020016100b9565b61012361011e366004610d69565b610462565b60405190151581526020016100b9565b610146610141366004610a45565b61047b565b6040516100b9959493929190610e1b565b610123610165366004610a45565b610537565b6100d5610178366004610a45565b610548565b6100d561018b366004610e53565b61060a565b6101a361019e366004610a45565b61071e565b6040516100b99190610ed3565b6000818152602081905260408120805460609283929190036101ed576040516357f6a85960e11b8152600481018590526024015b60405180910390fd5b600581015460008167ffffffffffffffff81111561020d5761020d610ac7565b604051908082528060200260200182016040528015610236578160200160208202803683370190505b50935060005b828110156102b15783600501818154811061025957610259610f6b565b600091825260208083209091015489835260018252604080842082855290925291205486519193509086908390811061029457610294610f6b565b6020908102919091010152806102a981610f97565b91505061023c565b5082600501848180548060200260200160405190810160405280929190818152602001828054801561030257602002820191906000526020600020905b8154815260200190600101908083116102ee575b5050505050915094509450505050915091565b806060015181604001511061033d5760405163f2a4008360e01b815260040160405180910390fd5b80604001514210806103525750806060015142115b156103705760405163f2a4008360e01b815260040160405180910390fd5b8060200151516000036103965760405163430f13b360e01b815260040160405180910390fd5b6000608082018190528151815260208181526040909120825181559082015182919060018201906103c79082611039565b506040820151600282015560608201516003820155608082015160048201805460ff191691151591909117905560a0820151805161040f9160058401916020909101906109e5565b5090505080600001517fdbbd7542af265cd88d18543dffe1513f1a929a26c6c7b57cff49b6f68ad8252b826020015183604001518460600151604051610457939291906110f9565b60405180910390a250565b600061047186868686866108c3565b9695505050505050565b6000602081905290815260409020805460018201805491929161049d90610fb0565b80601f01602080910402602001604051908101604052809291908181526020018280546104c990610fb0565b80156105165780601f106104eb57610100808354040283529160200191610516565b820191906000526020600020905b8154815290600101906020018083116104f957829003601f168201915b50505050600283015460038401546004909401549293909290915060ff1685565b60006105428261096c565b92915050565b6000818152602081905260408120805490910361057b576040516357f6a85960e11b8152600481018390526024016101e4565b600481015460ff16156105a4576040516310aea97f60e21b8152600481018390526024016101e4565b60008281526020819052604090819020600401805460ff191660019081179091556003830154915184927f4d311478d046dff7d9f8e1af204c60f6a75e69156a06335837f86c2b70f9ad8a926105fe92908601919061111e565b60405180910390a25050565b6000878152602081905260408120805490910361063d576040516357f6a85960e11b8152600481018990526024016101e4565b600481015460ff16610665576040516368071bfb60e01b8152600481018990526024016101e4565b61066e8861096c565b61068e5760405163c5e4a59760e01b8152600481018990526024016101e4565b61069b86868686866108c3565b6106b857604051636aee863360e11b815260040160405180910390fd5b60008881526001602081815260408084208b855290915282208054919290916106e29084906111b2565b9091555050604051339089907ff1003b73c437642c0460aee9cd9628b0b8c447b66e6c7c905531b9c644214a1190600090a35050505050505050565b6107596040518060c0016040528060008152602001606081526020016000815260200160008152602001600015158152602001606081525090565b6000828152602081905260408120805490910361078c576040516357f6a85960e11b8152600481018490526024016101e4565b806040518060c0016040529081600082015481526020016001820180546107b290610fb0565b80601f01602080910402602001604051908101604052809291908181526020018280546107de90610fb0565b801561082b5780601f106108005761010080835404028352916020019161082b565b820191906000526020600020905b81548152906001019060200180831161080e57829003601f168201915b5050505050815260200160028201548152602001600382015481526020016004820160009054906101000a900460ff16151515158152602001600582018054806020026020016040519081016040528092919081815260200182805480156108b257602002820191906000526020600020905b81548152602001906001019080831161089e575b505050505081525050915050919050565b60006001600160a01b0382166108ec5760405163043103a360e21b815260040160405180910390fd5b6040516308a3cff560e11b815282906001600160a01b038216906311479fea90610920908a908a908a908a906004016111c5565b602060405180830381865afa15801561093d573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906109619190611211565b979650505050505050565b60008181526020819052604081208054820361099e576040516357f6a85960e11b8152600481018490526024016101e4565b600481015460ff166109c6576040516368071bfb60e01b8152600481018490526024016101e4565b806002015442101580156109de575080600301544211155b9392505050565b828054828255906000526020600020908101928215610a20579160200282015b82811115610a20578251825591602001919060010190610a05565b50610a2c929150610a30565b5090565b5b80821115610a2c5760008155600101610a31565b600060208284031215610a5757600080fd5b5035919050565b600081518084526020808501945080840160005b83811015610a8e57815187529582019590820190600101610a72565b509495945050505050565b604081526000610aac6040830185610a5e565b8281036020840152610abe8185610a5e565b95945050505050565b634e487b7160e01b600052604160045260246000fd5b60405160c0810167ffffffffffffffff81118282101715610b0057610b00610ac7565b60405290565b604051601f8201601f1916810167ffffffffffffffff81118282101715610b2f57610b2f610ac7565b604052919050565b600082601f830112610b4857600080fd5b813567ffffffffffffffff811115610b6257610b62610ac7565b610b75601f8201601f1916602001610b06565b818152846020838601011115610b8a57600080fd5b816020850160208301376000918101602001919091529392505050565b8015158114610bb557600080fd5b50565b8035610bc381610ba7565b919050565b600082601f830112610bd957600080fd5b8135602067ffffffffffffffff821115610bf557610bf5610ac7565b8160051b610c04828201610b06565b9283528481018201928281019087851115610c1e57600080fd5b83870192505b8483101561096157823582529183019190830190610c24565b600060208284031215610c4f57600080fd5b813567ffffffffffffffff80821115610c6757600080fd5b9083019060c08286031215610c7b57600080fd5b610c83610add565b82358152602083013582811115610c9957600080fd5b610ca587828601610b37565b6020830152506040830135604082015260608301356060820152610ccb60808401610bb8565b608082015260a083013582811115610ce257600080fd5b610cee87828601610bc8565b60a08301525095945050505050565b60008060408385031215610d1057600080fd5b50508035926020909101359150565b806040810183101561054257600080fd5b806080810183101561054257600080fd5b806060810183101561054257600080fd5b80356001600160a01b0381168114610bc357600080fd5b60008060008060006101808688031215610d8257600080fd5b610d8c8787610d1f565b9450610d9b8760408801610d30565b9350610daa8760c08801610d1f565b9250610dba876101008801610d41565b9150610dc96101608701610d52565b90509295509295909350565b6000815180845260005b81811015610dfb57602081850181015186830182015201610ddf565b506000602082860101526020601f19601f83011685010191505092915050565b85815260a060208201526000610e3460a0830187610dd5565b6040830195909552506060810192909252151560809091015292915050565b60008060008060008060006101c0888a031215610e6f57600080fd5b8735965060208801359550610e878960408a01610d1f565b9450610e968960808a01610d30565b9350610ea6896101008a01610d1f565b9250610eb6896101408a01610d41565b9150610ec56101a08901610d52565b905092959891949750929550565b600060208083528351818401528084015160c06040850152610ef860e0850182610dd5565b905060408501516060850152606085015160808501526080850151151560a085015260a0850151601f198583030160c086015281815180845284840191508483019350600092505b80831015610f605783518252928401926001929092019190840190610f40565b509695505050505050565b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b600060018201610fa957610fa9610f81565b5060010190565b600181811c90821680610fc457607f821691505b602082108103610fe457634e487b7160e01b600052602260045260246000fd5b50919050565b601f82111561103457600081815260208120601f850160051c810160208610156110115750805b601f850160051c820191505b818110156110305782815560010161101d565b5050505b505050565b815167ffffffffffffffff81111561105357611053610ac7565b611067816110618454610fb0565b84610fea565b602080601f83116001811461109c57600084156110845750858301515b600019600386901b1c1916600185901b178555611030565b600085815260208120601f198616915b828110156110cb578886015182559484019460019091019084016110ac565b50858210156110e95787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b60608152600061110c6060830186610dd5565b60208301949094525060400152919050565b60408152600080845461113081610fb0565b8060408601526060600180841660008114611152576001811461116c5761119d565b60ff1985168884015283151560051b88018301955061119d565b8960005260208060002060005b868110156111945781548b8201870152908401908201611179565b8a018501975050505b50505050506020929092019290925292915050565b8082018082111561054257610542610f81565b61016081016040808784378083018660005b60028110156111f4578382843791830191908301906001016111d7565b505050808560c08501375060608361010084013795945050505050565b60006020828403121561122357600080fd5b81516109de81610ba756fea26469706673582212203be6debe642ed6a9350c1e8c3310294039caea56ff4f1db10131ac81f3fbaa3d64736f6c63430008140033",
+  "devdoc": {
+    "author": "exo404, simonemontella, valeriooconte",
+    "details": "Fornisce funzionalità per creare, chiudere elezioni e gestire i voti",
+    "errors": {
+      "InvalidCandidate(uint256)": [
+        {
+          "params": {
+            "candidateId": "ID del candidato non valido"
+          }
+        }
+      ],
+      "VotationAlreadyActive(uint256)": [
+        {
+          "params": {
+            "votationId": "ID dell'elezione già attiva"
+          }
+        }
+      ],
+      "VotationAlreadyExists(uint256)": [
+        {
+          "params": {
+            "votationId": "ID dell'elezione che già esiste"
+          }
+        }
+      ],
+      "VotationNotActive(uint256)": [
+        {
+          "params": {
+            "votationId": "ID dell'elezione non attiva"
+          }
+        }
+      ],
+      "VotationNotFound(uint256)": [
+        {
+          "params": {
+            "votationId": "Id ID dell'elezione non trovata"
+          }
+        }
+      ],
+      "VotingWindowClosed(uint256)": [
+        {
+          "params": {
+            "votationId": "ID dell'elezione per cui la finestra di voto è chiusa"
+          }
+        }
+      ]
+    },
+    "events": {
+      "VotationClosed(uint256,string)": {
+        "params": {
+          "name": "Nome dell'elezione chiusa",
+          "votationId": "ID dell'elezione chiusa"
+        }
+      },
+      "VotationCreated(uint256,string,uint256,uint256)": {
+        "params": {
+          "endTime": "Timestamp di fine dell'elezione",
+          "name": "Nome dell'elezione",
+          "startTime": "Timestamp di inizio dell'elezione",
+          "votationId": "ID univoco della nuova elezione"
+        }
+      },
+      "VotationStarted(uint256,string,uint256)": {
+        "params": {
+          "endTime": "Timestamp di fine dell'elezione",
+          "name": "Nome dell'elezione avviata",
+          "votationId": "ID dell'elezione avviata"
+        }
+      },
+      "VoteCast(uint256,address)": {
+        "params": {
+          "votationId": "ID dell'elezione per cui è stato espresso il voto",
+          "voter": "Indirizzo del votante"
+        }
+      },
+      "VoteVerified(uint256,address)": {
+        "params": {
+          "votationId": "ID dell'elezione per cui è stato verificato il voto",
+          "voter": "Indirizzo del votante verificato"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "checkVotingWindow(uint256)": {
+        "details": "Controlla che l'orario corrente sia tra startTime e endTime e che l'elezione sia attiva",
+        "params": {
+          "votationId": "ID dell'elezione da verificare"
+        },
+        "returns": {
+          "_0": "true se è possibile votare, false altrimenti"
+        }
+      },
+      "createVotation((uint256,string,uint256,uint256,bool,uint256[]))": {
+        "details": "La funzione deve verificare che i parametri siano validi e che l'elezione non esista già",
+        "params": {
+          "_newVotation": "Struttura contenente i dati dell'elezione da creare"
+        }
+      },
+      "getVotation(uint256)": {
+        "details": "Funzione di sola lettura per ottenere informazioni complete su un'elezione",
+        "params": {
+          "votationId": "ID dell'elezione di cui ottenere i dettagli"
+        },
+        "returns": {
+          "_0": "Votation struct contenente tutti i dati dell'elezione"
+        }
+      },
+      "startVotation(uint256)": {
+        "details": "Deve verificare che l'elezione sia attiva e che l'ID sia valido",
+        "params": {
+          "votationId": "ID dell'elezione da chiudere"
+        }
+      },
+      "verifyVote(uint256[2],uint256[2][2],uint256[2],uint256[3],address)": {
+        "details": "Funzione di sola lettura per verificare l'integrità del voto",
+        "params": {
+          "a": "Parametro della prova zk-SNARK",
+          "b": "Parametro della prova zk-SNARK",
+          "c": "Parametro della prova zk-SNARK",
+          "input": "Input della prova zk-SNARK",
+          "verifyContract": "Indirizzo del contratto di verifica della prova zk-SN"
+        },
+        "returns": {
+          "_0": "true se il voto è valido e correttamente registrato, false altrimenti"
+        }
+      },
+      "votationResults(uint256)": {
+        "details": "Può essere chiamata solo per elezioni esistenti",
+        "params": {
+          "votationId": "ID dell'elezione di cui ottenere i risultati"
+        },
+        "returns": {
+          "candidateIds": "Array degli ID dei candidati",
+          "votes": "Array del numero di voti ricevuti da ciascun candidato (stesso ordine di candidateIds)"
+        }
+      },
+      "vote(uint256,uint256,uint256[2],uint256[2][2],uint256[2],uint256[3],address)": {
+        "details": "Deve verificare che l'elezione sia attiva, che sia nella finestra temporale corretta,      che il candidato sia valido e che il votante non abbia già votato",
+        "params": {
+          "a": "Parametro della prova zk-SNARK",
+          "b": "Parametro della prova zk-SNARK",
+          "c": "Parametro della prova zk-SNARK",
+          "candidateId": "ID del candidato per cui votare",
+          "input": "Input della prova zk-SNARK",
+          "verifyContract": "Indirizzo del contratto di verifica della prova zk-SN",
+          "votationId": "ID dell'elezione per cui votare"
+        }
+      }
+    },
+    "stateVariables": {
+      "votationCandidatesVotes": {
+        "details": "Per memorizzare i risultati delle elezioni"
+      }
+    },
+    "title": "VotationManager",
+    "version": 1
+  },
+  "userdoc": {
+    "errors": {
+      "InvalidCandidate(uint256)": [
+        {
+          "notice": "Errore lanciato quando si specifica un candidato non valido"
+        }
+      ],
+      "InvalidName()": [
+        {
+          "notice": "Errore lanciato quando si tenta di creare un'elezione con un nome vuoto"
+        }
+      ],
+      "InvalidTimeInterval()": [
+        {
+          "notice": "Errore lanciato quando si tenta di creare un'elezione con un intervallo di tempo non valido"
+        }
+      ],
+      "InvalidVerifierAddress()": [
+        {
+          "notice": "Errore lanciato se tenta la verifica di un voto con un contratto di verifica non valido"
+        }
+      ],
+      "InvalidVote()": [
+        {
+          "notice": "Errore lanciato quando si esprime un voto non valido"
+        }
+      ],
+      "VotationAlreadyActive(uint256)": [
+        {
+          "notice": "Errore lanciato quando si tenta di avviare un'elezione già attiva"
+        }
+      ],
+      "VotationAlreadyExists(uint256)": [
+        {
+          "notice": "Errore lanciato quando si tenta di creare un'elezione con ID già esistente"
+        }
+      ],
+      "VotationNotActive(uint256)": [
+        {
+          "notice": "Errore lanciato quando si tenta di operare su un'elezione non attiva"
+        }
+      ],
+      "VotationNotFound(uint256)": [
+        {
+          "notice": "Errore lanciato quando si tenta di accedere a un'elezione inesistente"
+        }
+      ],
+      "VotingWindowClosed(uint256)": [
+        {
+          "notice": "Errore lanciato quando si tenta di votare fuori dalla finestra temporale consentita"
+        }
+      ]
+    },
+    "events": {
+      "VotationClosed(uint256,string)": {
+        "notice": "Emesso quando un'elezione viene chiusa"
+      },
+      "VotationCreated(uint256,string,uint256,uint256)": {
+        "notice": "Emesso quando viene creata una nuova elezione"
+      },
+      "VotationStarted(uint256,string,uint256)": {
+        "notice": "Emesso quando un'elezione viene avviata"
+      },
+      "VoteCast(uint256,address)": {
+        "notice": "Emesso quando un voto viene registrato"
+      },
+      "VoteVerified(uint256,address)": {
+        "notice": "Emesso quando un voto viene verificato con successo"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "checkVotingWindow(uint256)": {
+        "notice": "Verifica se una elezione è attualmente nella finestra temporale di voto"
+      },
+      "createVotation((uint256,string,uint256,uint256,bool,uint256[]))": {
+        "notice": "Crea una nuova elezione"
+      },
+      "getVotation(uint256)": {
+        "notice": "Restituisce i dettagli di un'elezione specifica"
+      },
+      "startVotation(uint256)": {
+        "notice": "Chiude un'elezione esistente"
+      },
+      "verifyVote(uint256[2],uint256[2][2],uint256[2],uint256[3],address)": {
+        "notice": "Verifica se un voto è stato correttamente registrato"
+      },
+      "votationCandidatesVotes(uint256,uint256)": {
+        "notice": "Mapping che associa l'ID di un'elezione al numero di voti per ciascun candidato"
+      },
+      "votationResults(uint256)": {
+        "notice": "Restituisce i risultati di un'elezione"
+      },
+      "vote(uint256,uint256,uint256[2],uint256[2][2],uint256[2],uint256[3],address)": {
+        "notice": "Esprime un voto per un candidato in una specifica elezione"
+      }
+    },
+    "notice": "Implementazione dell'interfaccia IVotationManager per la gestione delle elezioni",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 13,
+        "contract": "contracts/VotationManager.sol:VotationManager",
+        "label": "votations",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_struct(Votation)492_storage)"
+      },
+      {
+        "astId": 20,
+        "contract": "contracts/VotationManager.sol:VotationManager",
+        "label": "votationCandidatesVotes",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))"
+      }
+    ],
+    "types": {
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => mapping(uint256 => uint256))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_uint256)"
+      },
+      "t_mapping(t_uint256,t_struct(Votation)492_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct IVotationManager.Votation)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Votation)492_storage"
+      },
+      "t_mapping(t_uint256,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(Votation)492_storage": {
+        "encoding": "inplace",
+        "label": "struct IVotationManager.Votation",
+        "members": [
+          {
+            "astId": 480,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "id",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 482,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "name",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 484,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "startTime",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 486,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "endTime",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 488,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "isActive",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_bool"
+          },
+          {
+            "astId": 491,
+            "contract": "contracts/VotationManager.sol:VotationManager",
+            "label": "candidates",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_array(t_uint256)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "192"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
