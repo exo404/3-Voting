@@ -5,7 +5,6 @@ import path from 'path'
 import { Votation } from '../models/Votation';
 
 const TREES_PATH = process.env.TREES_PATH || 'data/trees';
-
 export class MerkleManager {
 
     private votationTree: MerkleTree
@@ -70,6 +69,17 @@ export class MerkleManager {
         fs.writeFileSync(this.treeFilePath, JSON.stringify(json, null, 2))
     }
 
+    getProof(commitment: string): { pathElements: bigint[], pathIndices: number[] } {
+        const commitmentHex = BigInt(commitment).toString(16).padStart(64, '0');
+        const commitmentBuf = Buffer.from(commitmentHex, 'hex');
+        const proof = this.votationTree!.getProof(commitmentBuf);
+
+        const pathElements = proof.map(p => BigInt('0x' + p.data.toString('hex')));
+        const pathIndices = proof.map(p => p.position === 'left' ? 1 : 0);
+
+        return { pathElements, pathIndices };
+    }
+
     loadTree() {
         try {
             const raw = fs.readFileSync(this.treeFilePath, 'utf-8')
@@ -81,7 +91,6 @@ export class MerkleManager {
             throw error;
         }
     }
-
 }
 
 function poseidonHash(data: Buffer) {
