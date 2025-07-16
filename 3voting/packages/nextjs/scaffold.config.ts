@@ -13,6 +13,27 @@ export type ScaffoldConfig = BaseConfig;
 
 export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
+import { defineChain } from 'viem';
+
+const 3votingchain = defineChain({
+  id: 1771,
+  name: '3votingchain',
+  network: '3votingchain-local',
+  nativeCurrency: {
+    decimals: 18,
+    name: '3VT',
+    symbol: '3VT',
+  },
+  rpcUrls: {
+    default: {
+      http: ['http://127.0.0.1:36415/ext/bc/UTJKmj9dCnXxUsyGjwb5rHkJC8H8YEuaQChSzfyGYnmvBNDQy/rpc'],
+    },
+    public: {
+      http: ['http://127.0.0.1:36415/ext/bc/UTJKmj9dCnXxUsyGjwb5rHkJC8H8YEuaQChSzfyGYnmvBNDQy/rpc'],
+    },
+  },
+});
+
 const scaffoldConfig = {
   // The networks on which your DApp is live
   targetNetworks: [chains.hardhat],
@@ -28,6 +49,7 @@ const scaffoldConfig = {
   rpcOverrides: {
     // Example:
     // [chains.mainnet.id]: "https://mainnet.buidlguidl.com",
+    [1771]: "http://127.0.0.1:36415/ext/bc/UTJKmj9dCnXxUsyGjwb5rHkJC8H8YEuaQChSzfyGYnmvBNDQy/rpc"
   },
   // This is ours WalletConnect's default project ID.
   // You can get your own at https://cloud.walletconnect.com
