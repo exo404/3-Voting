@@ -161,7 +161,7 @@ router.get("/:name/voters", async (req, res) => {
     }
 });
 
-router.post("/:name/voters/add", async (req, res) => {
+router.post("/:name/voter/add", async (req, res) => {
     const { name } = req.params;
     const { commitment } = req.body;
 
@@ -190,6 +190,8 @@ router.post("/:name/voters/add", async (req, res) => {
     const { name } = req.params;
     const { commitments } = req.body;
 
+    console.log(commitments);
+
     if (!Array.isArray(commitments) || commitments.length === 0) {
         return res.status(400).json({ error: 'Commitments array is required and cannot be empty' });
     }
@@ -202,7 +204,7 @@ router.post("/:name/voters/add", async (req, res) => {
             return res.status(404).json({ error: `Votation "${name}" not found` });
         }
 
-        votation.addVoters(commitments);
+        await votation.addVoters(commitments);
 
         return res.status(200).json({ message: 'Voters added successfully', commitments });
     } catch (error: any) {

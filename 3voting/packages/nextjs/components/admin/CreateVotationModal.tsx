@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
+import { poseidon } from 'poseidon-hash';
 
 interface CreateVotationModalProps {
   isOpen: boolean;
@@ -105,14 +106,31 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
 
       const votationId = result.votationId;
 
-      //TBD: calcolare committment a partire dal json dei votanti
-      const committmentsList = [];
+      const response = await fetch('/wallets_sbt_data.json');
+      const walletsData = await response.json();
+
+      const wallets = walletsData.wallets;
+
+      const commitmentsList = [];
+
+      for (let i = 0; i < wallets.length; i++) {
+        const userSecret = wallets[i].privateKey;
+
+        const secret = poseidon([userSecret, votationId, 0]);
+        const nullifier = poseidon([userSecret, votationId, 1]);
+
+        const commitment = poseidon([secret, nullifier]);
+
+        console.log(commitment);
+
+        commitmentsList.push(commitment.toString());
+      }
 
       const votersData = {
-        committments: committmentsList
+        commitments: commitmentsList
       };
 
-      const route = 'http://localhost:3156/votations/' + votationName + '/voters/add';
+      const route = 'http://127.0.0.1:3156/votations/' + votationName + '/voters/add';
 
       res = await fetch(route, {
         method: 'POST',
