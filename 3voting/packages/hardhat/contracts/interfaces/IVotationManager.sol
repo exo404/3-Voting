@@ -162,7 +162,7 @@ interface IVotationManager {
     uint[2] calldata a,
     uint[2][2] calldata b,
     uint[2] calldata c,
-    uint[] calldata input,
+    uint[3] calldata input,
     address verifyContract
     ) external;
 
@@ -180,7 +180,7 @@ interface IVotationManager {
     uint[2] calldata a,
     uint[2][2] calldata b,
     uint[2] calldata c,
-    uint[] calldata input,
+    uint[3] calldata input,
     address verifyContract) external returns (bool);
 
     /**
