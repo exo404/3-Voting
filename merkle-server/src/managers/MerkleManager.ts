@@ -4,49 +4,47 @@ import fs from 'fs'
 import path from 'path'
 import { Votation } from '../models/Votation';
 
-const TREES_PATH = process.env.TREES_PATH || path.join(__dirname, 'data/trees');
+const TREES_PATH = process.env.TREES_PATH || 'data/trees';
 
 export class MerkleManager {
 
-    private votationTree?: MerkleTree
-
-    private treeFilename: string
-
+    private votationTree: MerkleTree
+    private treeFilePath: string
     private associatedVotation: Votation
 
     constructor(votation: Votation) {
         this.associatedVotation = votation;
+        this.treeFilePath = path.join(TREES_PATH, this.associatedVotation.name + ".json");
 
-        this.treeFilename = this.associatedVotation.name + ".json";
-        this.setupTree();
+        this.votationTree = this.initTree();
+        this.saveTree();
     }
 
-    private setupTree() {
-        try {
-            if (fs.existsSync(path.join(TREES_PATH, this.treeFilename))) {
-                this.votationTree = this.readTree();
+    private initTree(): MerkleTree {
+        if (!fs.existsSync(TREES_PATH)) {
+            fs.mkdirSync(TREES_PATH, { recursive: true });
+        }
 
-                return;
-            }
-        } catch (error) {
-            console.error('Error setting up Merkle tree:', error);
-
-            //NEW TREE
-            this.votationTree = new MerkleTree(this.getLeavesFromVotation(), hashFunction, { sort: true });
-            this.saveTree();
+        if (fs.existsSync(this.treeFilePath)) {
+            return this.loadTree();
+        } else {
+            console.log("buffers" + this.getBuffers(this.associatedVotation.voters).map((l) => l.toString('hex')));
+            return new MerkleTree(
+                this.getBuffers(this.associatedVotation.voters),
+                poseidonHash,
+                { sort: true }
+            );
         }
     }
 
     addLeaf(commitment: string) {
-        const leaf = Buffer.from(commitment, 'hex')
-        this.votationTree!.addLeaf(leaf)
+        this.votationTree!.addLeaf(Buffer.from(commitment, 'hex'))
 
         this.saveTree()
     }
 
     addLeaves(commitments: string[]) {
-        const leaves = commitments.map(c => Buffer.from(c, 'hex'));
-        this.votationTree!.addLeaves(leaves);
+        this.votationTree!.addLeaves(this.getBuffers(commitments));
 
         this.saveTree();
     }
@@ -59,26 +57,25 @@ export class MerkleManager {
         return this.votationTree!.getLeaves().map((l) => l.toString('hex'))
     }
 
-    getLeavesFromVotation(): Buffer[] {
-        return this.associatedVotation.voters.map(voter => Buffer.from(voter, 'hex'));
+    getBuffers(leaves: string[]): Buffer[] {
+        return leaves.map(leaf => Buffer.from(leaf, 'hex'));
     }
 
-    private saveTree() {
+    saveTree() {
         const json = {
             leaves: this.votationTree!.getLeaves().map((l) => l.toString('hex')),
             root: this.getRoot()
         }
 
-        fs.writeFileSync(path.join(TREES_PATH, this.treeFilename!), JSON.stringify(json, null, 2))
+        fs.writeFileSync(this.treeFilePath, JSON.stringify(json, null, 2))
     }
 
-    private readTree() {
+    loadTree() {
         try {
-            const filepath = path.join(TREES_PATH, this.treeFilename!)
-            const raw = fs.readFileSync(filepath, 'utf-8')
+            const raw = fs.readFileSync(this.treeFilePath, 'utf-8')
 
             const treeData = JSON.parse(raw)
-            return new MerkleTree(treeData.leaves.map((l: string) => Buffer.from(l, 'hex')), hashFunction, { sort: true });
+            return new MerkleTree(treeData.leaves.map((l: string) => Buffer.from(l, 'hex')), poseidonHash, { sort: true });
         } catch (error) {
             console.error('Error reading Merkle tree from file:', error);
             throw error;
@@ -87,6 +84,6 @@ export class MerkleManager {
 
 }
 
-function hashFunction(data: Buffer) {
-    return poseidon([BigInt('0x' + data.toString('hex'))])
+function poseidonHash(data: Buffer) {
+    return poseidon([BigInt('0x' + data.toString('hex'))]);
 }

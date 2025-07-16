@@ -3,11 +3,18 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import votationsRouter from './routes/votations';
+import morgan from 'morgan';
+import { DatabaseManager } from './managers/DatabaseManager';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.API_PORT || 3000;
+
+const initDb = new DatabaseManager();
+initDb.initTables();
+initDb.close();
 
 const dataDir = process.env.DATA_PATH || path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {
@@ -20,11 +27,13 @@ if (!fs.existsSync(treesDir!)) {
 }
 
 app.use(bodyParser.json());
-app.use("/votations", require("./routes/votations"));
+app.use(morgan('dev'));
+
+app.use("/votations", votationsRouter);
 
 // TODO vote api call
 // TODO add api call log
 
-app.listen(PORT, (error?) => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

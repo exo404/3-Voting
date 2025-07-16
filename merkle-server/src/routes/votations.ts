@@ -4,18 +4,19 @@ import { Votation } from '../models/Votation';
 
 const router = express.Router();
 
+// TODO change from json error to raw
+
 router.post("/new", async (req, res) => {
     try {
         const {
             name,
             description,
-            isPublic,
+            isPublic = true,
             startDate,
             endDate,
             candidates = [],
             voters = [],
-            createdBy,
-            createdAt = new Date(Date.now())
+            createdBy = "system",
         } = req.body;
 
         if (!name) {
@@ -26,12 +27,17 @@ router.post("/new", async (req, res) => {
             return res.status(400).json({ error: 'Start date and end date are required' });
         }
 
-        if (new Date(startDate) >= new Date(endDate)) {
+        const parsedStartDate = new Date(startDate);
+        const parsedEndDate = new Date(endDate);
+
+        const creationDate = new Date(Date.now())
+
+        if (parsedStartDate >= parsedEndDate) {
             return res.status(400).json({ error: 'End date must be after start date' });
         }
 
-        if (new Date(startDate) < new Date(createdAt || Date.now())) {
-            return res.status(400).json({ error: 'Start date must be after creation date' });
+        if (parsedStartDate < creationDate) {
+            return res.status(400).json({ error: 'Start date must be after creation date', startDate: parsedStartDate.toISOString(), creationDate: creationDate.toISOString() });
         }
 
         const db = new DatabaseManager();
@@ -45,19 +51,18 @@ router.post("/new", async (req, res) => {
             name,
             description,
             isPublic,
-            startDate,
-            endDate,
+            parsedStartDate,
+            parsedEndDate,
             candidates || [],
             voters || [],
             createdBy,
-            createdAt || new Date(Date.now())
+            creationDate
         );
 
         const votationId = await votation.save();
 
         return res.status(201).json({
             message: `Votation "${votation.name}" created successfully with id "${votationId}"`,
-            votation: votation,
         });
     } catch (error: any) {
         console.error('Error creating votation:', error);
@@ -228,4 +233,4 @@ router.post("/:name/add-candidates", async (req, res) => {
 });
 
 //TODO add utility method getVotationByName
-module.exports = router;
+export default router;

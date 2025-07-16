@@ -52,10 +52,16 @@ export class Votation {
 
         try {
             const votationId = await db.saveVotation(this);
-
-            //TODO save merkle tree
-
             this.votationId = votationId;
+
+            if (this.voters.length > 0) {
+                db.addVoters(votationId, this.voters);
+            }
+
+            if (this.candidates.length > 0) {
+                db.addCandidates(votationId, this.candidates);
+            }
+
             return votationId;
         } catch (error) {
             console.error('Failed to save votation:', error);

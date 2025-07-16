@@ -17,14 +17,11 @@ export class DatabaseManager {
             if (err) {
                 console.error('Error opening database:', err.message);
                 throw err;
-            } else {
-                console.log('Connected to the SQLite database'); // TODO remove
-                this.initTables();
             }
         });
     }
 
-    private initTables(): void {
+    public initTables(): void {
         this.db.serialize(() => {
             this.db.run(`CREATE TABLE IF NOT EXISTS votations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -212,8 +209,6 @@ export class DatabaseManager {
         this.db.close((err) => {
             if (err) {
                 console.error('Error closing database:', err.message);
-            } else {
-                console.log('Database connection closed');
             }
         });
     }
