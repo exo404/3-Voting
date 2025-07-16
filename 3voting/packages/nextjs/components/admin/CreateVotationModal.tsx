@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
@@ -25,7 +25,9 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { writeContractAsync: createVotation } = useScaffoldWriteContract("VotationManager");
+  const [data, setData] = useState<any>(null);
+
+  const { writeContractAsync: createVotation } = useScaffoldWriteContract({contractName: "VotationManager"});
 
   const addCandidate = () => {
     const newId = (candidates.length + 1).toString();
@@ -63,7 +65,18 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
     try {
       const startTime = Math.floor(new Date(startDate).getTime() / 1000);
       const endTime = Math.floor(new Date(endDate).getTime() / 1000);
-      const votationId = Math.floor(Math.random() * 1000000); // In a real app, this would be handled by the contract
+      
+      useEffect(() => {
+        fetch('http://localhost:3000/api/votation') // Cambia l'URL con quello del tuo backend
+        .then((res) => {
+          if (!res.ok) throw new Error("Errore nella risposta del server");
+          return res.json();
+        })
+        .then((json) => setData(json))
+        .catch((err) => console.error("Errore:", err));
+      }, []);
+
+      const votationId = data.las
 
       const candidateIds = validCandidates.map((_, index) => index + 1);
 
@@ -165,14 +178,6 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
               <label className="label">
                 <span className="label-text">Candidates *</span>
               </label>
-              <button
-                type="button"
-                onClick={addCandidate}
-                className="btn btn-sm btn-outline"
-              >
-                <PlusIcon className="h-4 w-4 mr-1" />
-                Add Candidate
-              </button>
             </div>
 
             <div className="space-y-2">
