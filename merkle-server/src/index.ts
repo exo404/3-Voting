@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import fs from 'fs';
@@ -10,6 +11,10 @@ import { DatabaseManager } from './managers/DatabaseManager';
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
+app.use(express.json());
+
 const PORT = process.env.API_PORT || 3156;
 
 const initDb = new DatabaseManager();

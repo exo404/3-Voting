@@ -1,6 +1,7 @@
+/* eslint-disable prettier/prettier */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
@@ -24,8 +25,6 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
     { id: "2", name: "" },
   ]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [data, setData] = useState<any>(null);
 
   const { writeContractAsync: createVotation } = useScaffoldWriteContract({contractName: "VotationManager"});
 
@@ -60,34 +59,73 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
       return;
     }
 
+    const candidatesList = [];
+
+    // TBD: migliorare prelievo di nome e cognome
+    for (let index = 0; index < validCandidates.length; index++) {
+      const tokens = validCandidates[index].name.split(" ");
+
+      const candidate = {
+        name: tokens[0],
+        surname: tokens[1]
+      };
+
+      candidatesList.push(candidate);
+    }
+
     setIsLoading(true);
 
     try {
       const startTime = Math.floor(new Date(startDate).getTime() / 1000);
       const endTime = Math.floor(new Date(endDate).getTime() / 1000);
-      
-      useEffect(() => {
-        fetch('http://localhost:3000/api/votation') // Cambia l'URL con quello del tuo backend
-        .then((res) => {
-          if (!res.ok) throw new Error("Errore nella risposta del server");
-          return res.json();
-        })
-        .then((json) => setData(json))
-        .catch((err) => console.error("Errore:", err));
-      }, []);
 
-      const votationId = data.las
-
-      const candidateIds = validCandidates.map((_, index) => index + 1);
+      // TBD: aggiungere un campo per la descrizione nel form
+      const votationDescription = "test"
 
       const votationData = {
-        id: votationId,
         name: votationName,
-        startTime: startTime,
-        endTime: endTime,
-        isActive: false,
-        candidates: candidateIds,
+        description: votationDescription,
+        startDate: startTime,
+        endDate: endTime,
+        candidates: candidatesList,
       };
+
+      let res = await fetch('http://127.0.0.1:3156/votations/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(votationData)
+      });
+
+      if (!res.ok) throw new Error('Errore nella richiesta');
+
+      let result = await res.json();
+      console.log('Risposta dal server:', result);
+
+      const votationId = result.votationId;
+
+      //TBD: calcolare committment a partire dal json dei votanti
+      const committmentsList = [];
+
+      const votersData = {
+        committments: committmentsList
+      };
+
+      const route = 'http://localhost:3156/votations/' + votationName + '/voters/add';
+
+      res = await fetch(route, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(votersData)
+      });
+      
+      if (!res.ok) throw new Error('Errore nella richiesta');
+
+      result = await res.json();
+      console.log('Risposta dal server:', result);
 
       await createVotation({
         functionName: "createVotation",

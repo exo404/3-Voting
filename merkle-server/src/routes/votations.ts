@@ -5,16 +5,16 @@ import { Votation } from '../models/Votation';
 const router = express.Router();
 
 router.post("/new", async (req, res) => {
+    console.log('Richiesta ricevuta:');
+    console.log(req.body);
+
     try {
         const {
             name,
             description,
-            isPublic = true,
             startDate,
             endDate,
-            candidates = [],
-            voters,
-            createdBy = "system",
+            candidates,
         } = req.body;
 
         if (!name) {
@@ -25,8 +25,8 @@ router.post("/new", async (req, res) => {
             return res.status(400).json({ error: 'Start date and end date are required' });
         }
 
-        const parsedStartDate = new Date(startDate);
-        const parsedEndDate = new Date(endDate);
+        const parsedStartDate = new Date(startDate * 1000);
+        const parsedEndDate = new Date(endDate * 1000);
 
         const creationDate = new Date(Date.now())
 
@@ -38,9 +38,11 @@ router.post("/new", async (req, res) => {
             return res.status(400).json({ error: 'Start date must be after creation date', startDate: parsedStartDate.toISOString(), creationDate: creationDate.toISOString() });
         }
 
+        /*
         if (!voters || !Array.isArray(voters) || voters.length === 0) {
             return res.status(400).json({ error: 'Voters array is required and cannot be empty' });
         }
+        */
 
         const db = new DatabaseManager();
         const existingVotation = await db.getVotationByName(name);
@@ -48,6 +50,12 @@ router.post("/new", async (req, res) => {
         if (existingVotation) {
             return res.status(400).json({ error: `A votation "${name}" already exists` });
         }
+
+        const isPublic = true;
+
+        const voters : string[] = [];
+
+        const createdBy = "system";
 
         const votation = new Votation(
             name,
@@ -64,6 +72,7 @@ router.post("/new", async (req, res) => {
         const votationId = await votation.save();
 
         return res.status(201).json({
+            votationId: votationId,
             message: `Votation "${votation.name}" created successfully with id "${votationId}"`,
         });
     } catch (error: any) {
