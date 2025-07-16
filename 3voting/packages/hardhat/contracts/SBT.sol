@@ -28,11 +28,9 @@ contract SBT is ERC5192, ISBT {
 
     /**
      * @notice Costruttore del contratto SBT
-     * @param _name Nome della collezione di token
-     * @param _symbol Simbolo della collezione di token
      * @dev Inizializza il contratto padre ERC5192 con i parametri forniti
      */
-    constructor(string memory _name, string memory _symbol) ERC5192(_name, _symbol, true){}
+    constructor() ERC5192("3VT SBT", "3VSBT", true) {}
 
     /// @inheritdoc ISBT
     function createSBT(SBTData memory _data) external {

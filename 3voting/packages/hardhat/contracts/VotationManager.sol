@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
+pragma solidity ^0.8.20;
 
 import {IVotationManager} from "./interfaces/IVotationManager.sol";
+import {Groth16Verifier} from "./verifier.sol";
 
 /**
  * @title VotationManager
@@ -47,22 +48,35 @@ contract VotationManager is IVotationManager {
     }
 
     /// @inheritdoc IVotationManager
-    function vote(uint256 votationId, uint256 candidateId, bytes32 root, bytes32 nullifierHash) external {
+    function vote(
+    uint256 votationId, uint256 candidateId, 
+    uint[2] calldata a,
+    uint[2][2] calldata b,
+    uint[2] calldata c,
+    uint[3] calldata input,
+    address verifyContract
+    ) external {
         Votation storage votation = votations[votationId];
 
         if (votation.id == 0) revert VotationNotFound(votationId);
         if (!votation.isActive) revert VotationNotActive(votationId);
         if (!_checkVotingWindow(votationId)) revert VotingWindowClosed(votationId);
 
-        if (!_verifyVote(votationId, candidateId)) revert InvalidVote();
+        if (!_verifyVote(a, b, c, input, verifyContract)) revert InvalidVote();
 
         votationCandidatesVotes[votationId][candidateId] += 1;
         emit VoteCast(votationId, msg.sender);
     }
 
     /// @inheritdoc IVotationManager
-    function verifyVote(uint256 votationId, uint256 candidateId) external view returns (bool) {
-        return _verifyVote(votationId, candidateId);
+    function verifyVote(
+        uint[2] calldata a,
+        uint[2][2] calldata b,
+        uint[2] calldata c,
+        uint[3] calldata input,
+        address verifyContract
+    ) external view returns (bool) {
+        return _verifyVote(a, b, c, input, verifyContract);
     }
 
     /// @inheritdoc IVotationManager
@@ -98,9 +112,16 @@ contract VotationManager is IVotationManager {
         return votation;
     }
 
-    function _verifyVote(uint256 votationId, uint256 candidateId) internal view returns (bool) {
-        /// TODO: Implementare la logica di verifica del voto
-        return true;
+    function _verifyVote(
+        uint[2] calldata a,
+        uint[2][2] calldata b,
+        uint[2] calldata c,
+        uint[3] calldata input,
+        address verifyContract
+    ) internal view returns (bool) {
+        if (verifyContract == address(0)) revert InvalidVerifierAddress();
+        Groth16Verifier verifier = Groth16Verifier(verifyContract);
+        return verifier.verifyProof(a, b, c, input);
     }
 
     function _checkVotingWindow(uint256 votationId) internal view returns (bool) {

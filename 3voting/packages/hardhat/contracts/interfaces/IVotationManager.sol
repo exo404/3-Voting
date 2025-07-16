@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
+pragma solidity ^0.8.20;
 
 /**
  * @title IVotationManager
@@ -123,6 +123,11 @@ interface IVotationManager {
      */
     error InvalidVote();
 
+    /**
+     * @notice Errore lanciato se tenta la verifica di un voto con un contratto di verifica non valido
+     */
+    error InvalidVerifierAddress();
+
 
     ///////////////////// FUNCTIONS /////////////////////
 
@@ -146,19 +151,37 @@ interface IVotationManager {
      *      che il candidato sia valido e che il votante non abbia già votato
      * @param votationId ID dell'elezione per cui votare
      * @param candidateId ID del candidato per cui votare
-     * @param root Radice dell'albero Merkle per la prova di voto
-     * @param nullifierHash Hash del nullificatore per garantire l'unicità del voto
+     * @param a Parametro della prova zk-SNARK
+     * @param b Parametro della prova zk-SNARK
+     * @param c Parametro della prova zk-SNARK
+     * @param input Input della prova zk-SNARK
+     * @param verifyContract Indirizzo del contratto di verifica della prova zk-SN
      */
-    function vote(uint256 votationId, uint256 candidateId, bytes32 root, bytes32 nullifierHash) external;
+    function vote(
+    uint256 votationId, uint256 candidateId,
+    uint[2] calldata a,
+    uint[2][2] calldata b,
+    uint[2] calldata c,
+    uint[3] calldata input,
+    address verifyContract
+    ) external;
 
     /**
      * @notice Verifica se un voto è stato correttamente registrato
      * @dev Funzione di sola lettura per verificare l'integrità del voto
-     * @param votationId ID dell'elezione da verificare
-     * @param candidateId ID del candidato per cui è stato espresso il voto
+     * @param a Parametro della prova zk-SNARK
+     * @param b Parametro della prova zk-SNARK
+     * @param c Parametro della prova zk-SNARK
+     * @param input Input della prova zk-SNARK
+     * @param verifyContract Indirizzo del contratto di verifica della prova zk-SN
      * @return true se il voto è valido e correttamente registrato, false altrimenti
      */
-    function verifyVote(uint256 votationId, uint256 candidateId) external view returns (bool);
+    function verifyVote(    
+    uint[2] calldata a,
+    uint[2][2] calldata b,
+    uint[2] calldata c,
+    uint[3] calldata input,
+    address verifyContract) external view returns (bool);
 
     /**
      * @notice Restituisce i risultati di un'elezione
