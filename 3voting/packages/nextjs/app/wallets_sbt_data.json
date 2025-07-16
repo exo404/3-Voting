@@ -1,0 +1,260 @@
+{
+  "networkInfo": {
+    "name": "3votingchain",
+    "chainId": 1771,
+    "timestamp": "2025-07-16T21:39:32.345Z"
+  },
+  "contractAddress": "0xe336d36FacA76840407e6836d26119E1EcE0A2b4",
+  "wallets": [
+    {
+      "index": 1,
+      "address": "0x12d595F0a05883bfBc8ccA142c50e7D2f613428A",
+      "privateKey": "0x1c2cfca068f9e7667661a64be95515de4305c72d48144a315a8d0e72fb7398e9",
+      "mnemonic": "shadow teach surge gentle file output scare inquiry melt burst mention garden",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701972,
+        "name": "Mario",
+        "surname": "Rossi",
+        "birthDate": 1018180905,
+        "birthPlace": "Milano",
+        "isAdmin": true,
+        "issueDateReadable": "7/16/2025, 11:39:32 PM",
+        "birthDateReadable": "4/7/2002"
+      },
+      "sbt": {
+        "createTransactionHash": "0xa0f10eeb1f6746f7dfc2ecc6f1f8700c1623dab4ae1c2213d896c7bd5749b260",
+        "blockNumber": 18,
+        "gasUsed": "235533",
+        "balance": "1",
+        "tokenId": 1
+      },
+      "timestamp": "2025-07-16T21:39:35.021Z"
+    },
+    {
+      "index": 2,
+      "address": "0x74fA31FAeC34ffFC94C6933B805e3ca8eF370E96",
+      "privateKey": "0x70877a26c30e3472425c4e2a62eae8eae4bd5b9064f199003fa292926c261ca4",
+      "mnemonic": "crane village avoid grit volume deny educate same flash daughter manual demand",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701976,
+        "name": "Luigi",
+        "surname": "Bianchi",
+        "birthDate": 311965014,
+        "birthPlace": "Roma",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:36 PM",
+        "birthDateReadable": "11/20/1979"
+      },
+      "sbt": {
+        "createTransactionHash": "0x35defff199d1c268273a2e47b934170a7b6ce22b0260b8eccc8293ee06cc0ed7",
+        "blockNumber": 20,
+        "gasUsed": "215621",
+        "balance": "1",
+        "tokenId": 2
+      },
+      "timestamp": "2025-07-16T21:39:38.632Z"
+    },
+    {
+      "index": 3,
+      "address": "0x5e14A066D49364796072A61bdb4552Ee4049CdA2",
+      "privateKey": "0x82a5c9e24e43c677bc7be31b6c7a64b8de541d63309e89c671104f79e5043030",
+      "mnemonic": "magnet shop spray cargo bitter clinic taxi raven swear immense occur trick",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701980,
+        "name": "Giuseppe",
+        "surname": "Ferrari",
+        "birthDate": 989229011,
+        "birthPlace": "Napoli",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:40 PM",
+        "birthDateReadable": "5/7/2001"
+      },
+      "sbt": {
+        "createTransactionHash": "0xf3e5d5fa34ca52c593cb99b64681762f5179347cf3b477453025e812b30b5363",
+        "blockNumber": 22,
+        "gasUsed": "215681",
+        "balance": "1",
+        "tokenId": 3
+      },
+      "timestamp": "2025-07-16T21:39:42.762Z"
+    },
+    {
+      "index": 4,
+      "address": "0x05e24500A5a4d27b8b756B6C4fDfCE9848cF67CC",
+      "privateKey": "0xb941281263ba06231ab5dbe0e4526fc833f2c7eb8d1ac2a8e19f63ae4edd2024",
+      "mnemonic": "judge sample gift neutral drift dignity dignity orange course dash movie connect",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701984,
+        "name": "Francesco",
+        "surname": "Russo",
+        "birthDate": 728204692,
+        "birthPlace": "Torino",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:44 PM",
+        "birthDateReadable": "1/28/1993"
+      },
+      "sbt": {
+        "createTransactionHash": "0x55c45593ddfcde55727629295b0f331aa667fc28cf8391bf9448bd38da054b5f",
+        "blockNumber": 24,
+        "gasUsed": "215669",
+        "balance": "1",
+        "tokenId": 4
+      },
+      "timestamp": "2025-07-16T21:39:46.870Z"
+    },
+    {
+      "index": 5,
+      "address": "0x73774d1ca68936483E832F445C8a4beAaA358C2B",
+      "privateKey": "0x6e0b672d0d5da2256d0207b7a0759f1974fb04a1b8f060c86ec07a188a4d7a44",
+      "mnemonic": "gather defy friend cook eyebrow figure tool expand ride visit fossil primary",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701988,
+        "name": "Antonio",
+        "surname": "Romano",
+        "birthDate": 319058231,
+        "birthPlace": "Palermo",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:48 PM",
+        "birthDateReadable": "2/10/1980"
+      },
+      "sbt": {
+        "createTransactionHash": "0x34db1e7f14e9237d1a62af1973d6a0e7116ec75f4fc883d79f07477c0f0221e6",
+        "blockNumber": 26,
+        "gasUsed": "215669",
+        "balance": "1",
+        "tokenId": 5
+      },
+      "timestamp": "2025-07-16T21:39:50.966Z"
+    },
+    {
+      "index": 6,
+      "address": "0xdc56275056cCbf7f9F9E33696eBB39c4a6DDDb15",
+      "privateKey": "0xf492f5371272772fe6d5fb578a4b16eb63c1aaad31f3fca85858f90e69c02d86",
+      "mnemonic": "afford exit timber movie invest hero banana suggest school item solar donate",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701992,
+        "name": "Marco",
+        "surname": "Gallo",
+        "birthDate": 295098420,
+        "birthPlace": "Genova",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:52 PM",
+        "birthDateReadable": "5/9/1979"
+      },
+      "sbt": {
+        "createTransactionHash": "0xd9c463245fba2fd7d3c500b2f766d80af90fda0ffbef018d575b51fac8220995",
+        "blockNumber": 28,
+        "gasUsed": "215621",
+        "balance": "1",
+        "tokenId": 6
+      },
+      "timestamp": "2025-07-16T21:39:54.563Z"
+    },
+    {
+      "index": 7,
+      "address": "0x418c7350db1AFB6Cb28aB92e41e0F8AA4E906cB1",
+      "privateKey": "0x32e7df4b1cb59633cf2326cc57d56c3dcea17eb8f046b3a2dad0a33d6c6557e0",
+      "mnemonic": "report together lizard clerk curious mad shoulder eye old erase speed easily",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752701996,
+        "name": "Andrea",
+        "surname": "Costa",
+        "birthDate": 948294455,
+        "birthPlace": "Bologna",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:39:56 PM",
+        "birthDateReadable": "1/19/2000"
+      },
+      "sbt": {
+        "createTransactionHash": "0x1afa6b20cdcb83570a7bd7b9ac5b08beb77d35b2459989fcec174fbd89f2b234",
+        "blockNumber": 30,
+        "gasUsed": "215645",
+        "balance": "1",
+        "tokenId": 7
+      },
+      "timestamp": "2025-07-16T21:39:58.163Z"
+    },
+    {
+      "index": 8,
+      "address": "0x8487Ad442E8e2279A351Fe1A4704fDB97862A03d",
+      "privateKey": "0x3735027b1d4bf2e6435a44b226aeadfe916a9267bdf31fc25e051e8bd1c18c7d",
+      "mnemonic": "control ritual voyage blur coral surface carry sword kiss result quote mule",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752702000,
+        "name": "Alessandro",
+        "surname": "Fontana",
+        "birthDate": 120844765,
+        "birthPlace": "Firenze",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:40:00 PM",
+        "birthDateReadable": "10/30/1973"
+      },
+      "sbt": {
+        "createTransactionHash": "0x702110bdefbf213ca6a49bc7e8e8be7c5f1177fdb7af7caadfc8262ff33c4f12",
+        "blockNumber": 32,
+        "gasUsed": "215717",
+        "balance": "1",
+        "tokenId": 8
+      },
+      "timestamp": "2025-07-16T21:40:02.784Z"
+    },
+    {
+      "index": 9,
+      "address": "0x945b5e8B717AD93aa1f942928D9b563cCA5E53Ce",
+      "privateKey": "0xca2b77fce06758f10402a7262d2e1d31b8fe438c270751b7b739de2ad26fbebc",
+      "mnemonic": "cherry wrap wink abuse similar shed various essence accuse danger mountain grid",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752702004,
+        "name": "Matteo",
+        "surname": "Conti",
+        "birthDate": 632464976,
+        "birthPlace": "Bari",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:40:04 PM",
+        "birthDateReadable": "1/16/1990"
+      },
+      "sbt": {
+        "createTransactionHash": "0x52ac2fafde34600e1c1698deddd774568b6ccc6383171701495ad6aa7ee43a9f",
+        "blockNumber": 34,
+        "gasUsed": "215609",
+        "balance": "1",
+        "tokenId": 9
+      },
+      "timestamp": "2025-07-16T21:40:06.899Z"
+    },
+    {
+      "index": 10,
+      "address": "0xb085F7E0a841d9DfB6Af7DC13f0bFFF85531802A",
+      "privateKey": "0x486ee1f41ff283b99f7838bad9cecbfa429fd2f1dc4910bf1aff7fe70ff8f9f8",
+      "mnemonic": "obscure tilt hover observe wait vanish you ticket youth twelve turn raw",
+      "balance": "1.0",
+      "sbtData": {
+        "issueDate": 1752702008,
+        "name": "Luca",
+        "surname": "Ricci",
+        "birthDate": 186214300,
+        "birthPlace": "Catania",
+        "isAdmin": false,
+        "issueDateReadable": "7/16/2025, 11:40:08 PM",
+        "birthDateReadable": "11/26/1975"
+      },
+      "sbt": {
+        "createTransactionHash": "0x611c37898b9001bdf56d41a94704853025c7e23fd8e8e755896d801f5d1b3bb4",
+        "blockNumber": 36,
+        "gasUsed": "215621",
+        "balance": "1",
+        "tokenId": 10
+      },
+      "timestamp": "2025-07-16T21:40:11.025Z"
+    }
+  ]
+}
