@@ -47,7 +47,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     SBT: {
-      address: "0x4Ac1d98D9cEF99EC6546dEd4Bd550b0b287aaD6D",
+      address: "0xe336d36FacA76840407e6836d26119E1EcE0A2b4",
       abi: [
         {
           inputs: [],
@@ -369,6 +369,11 @@ const deployedContracts = {
                   name: "birthPlace",
                   type: "string",
                 },
+                {
+                  internalType: "bool",
+                  name: "isAdmin",
+                  type: "bool",
+                },
               ],
               internalType: "struct ISBT.SBTData",
               name: "_data",
@@ -435,6 +440,11 @@ const deployedContracts = {
                   internalType: "string",
                   name: "birthPlace",
                   type: "string",
+                },
+                {
+                  internalType: "bool",
+                  name: "isAdmin",
+                  type: "bool",
                 },
               ],
               internalType: "struct ISBT.SBTData",
@@ -637,6 +647,11 @@ const deployedContracts = {
               internalType: "string",
               name: "birthPlace",
               type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "isAdmin",
+              type: "bool",
             },
           ],
           stateMutability: "view",
