@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { Votation } from '../models/Votation';
 
-const TREES_PATH = process.env.TREES_PATH || path.join(__dirname, 'trees');
+const TREES_PATH = process.env.TREES_PATH || path.join(__dirname, 'data/trees');
 
 export class MerkleManager {
 

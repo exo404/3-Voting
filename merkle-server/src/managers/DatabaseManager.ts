@@ -1,14 +1,18 @@
 import sqlite3 from 'sqlite3';
-import fs from 'fs';
-import path from 'path';
 import { Votation } from '../models/Votation';
+const fs = require('fs');
+const path = require('path');
 
 export class DatabaseManager {
 
     private db: sqlite3.Database;
 
-    constructor(dbPath: string = 'votations.db') {
-        //TODO check for DATA folder
+    constructor(dbPath: string = process.env.DATABASE_PATH || 'data/votations.db') {
+        const dir = path.dirname(dbPath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
         this.db = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 console.error('Error opening database:', err.message);
