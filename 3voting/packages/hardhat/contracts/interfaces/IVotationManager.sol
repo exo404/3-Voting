@@ -181,7 +181,7 @@ interface IVotationManager {
     uint[2][2] calldata b,
     uint[2] calldata c,
     uint[3] calldata input,
-    address verifyContract) external returns (bool);
+    address verifyContract) external view returns (bool);
 
     /**
      * @notice Restituisce i risultati di un'elezione

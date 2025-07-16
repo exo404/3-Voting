@@ -75,7 +75,7 @@ contract VotationManager is IVotationManager {
         uint[2] calldata c,
         uint[3] calldata input,
         address verifyContract
-    ) external returns (bool) {
+    ) external view returns (bool) {
         return _verifyVote(a, b, c, input, verifyContract);
     }
 
@@ -118,7 +118,7 @@ contract VotationManager is IVotationManager {
         uint[2] calldata c,
         uint[3] calldata input,
         address verifyContract
-    ) internal returns (bool) {
+    ) internal view returns (bool) {
         if (verifyContract == address(0)) revert InvalidVerifierAddress();
         Groth16Verifier verifier = Groth16Verifier(verifyContract);
         return verifier.verifyProof(a, b, c, input);
