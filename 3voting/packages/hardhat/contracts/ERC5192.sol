@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
@@ -36,6 +36,7 @@ abstract contract ERC5192 is ERC721, IERC5192 {
     super.safeTransferFrom(from, to, tokenId, data);
   }
 
+/*
   function safeTransferFrom(address from, address to, uint256 tokenId)
     public
     override
@@ -43,7 +44,7 @@ abstract contract ERC5192 is ERC721, IERC5192 {
   {
     super.safeTransferFrom(from, to, tokenId);
   }
-
+*/
   function transferFrom(address from, address to, uint256 tokenId)
     public
     override
