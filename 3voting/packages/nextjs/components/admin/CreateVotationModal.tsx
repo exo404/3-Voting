@@ -80,7 +80,7 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
       const endTime = Math.floor(new Date(endDate).getTime() / 1000);
 
       // TBD: aggiungere un campo per la descrizione nel form
-      const votationDescription = "test"
+      const votationDescription = "test";
 
       const votationData = {
         name: votationName,
