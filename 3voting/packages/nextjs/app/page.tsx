@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">3Voting</span>
+            <span className="block text-4xl font-bold">3-Voting</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col">
             <p className="my-2 font-medium">Connected Address:</p>
@@ -23,10 +23,10 @@ const Home: NextPage = () => {
           </div>
 
           <p className="text-center text-lg mb-8">
-            A decentralized voting system built on Ethereum{" "}
+            A decentralized voting system built on Avalanche{" "}
             <br />
             <span className="text-sm text-gray-600">
-              Secure, transparent, and anonymous voting powered by Web3
+              Secure, transparent, and anonymous. Powered by Web3
             </span>
           </p>
 

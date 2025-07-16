@@ -16,6 +16,12 @@
 # production
 /build
 
+#yarn
+yarn-error.log
+.yarn/*
+.yarn
+
+
 # misc
 .DS_Store
 *.pem
