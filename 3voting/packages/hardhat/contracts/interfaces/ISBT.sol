@@ -26,6 +26,7 @@ interface ISBT {
         string surname;
         uint256 birthDate;
         string birthPlace;
+        bool isAdmin;
     }
 
     ///////////////////// EVENTS /////////////////////

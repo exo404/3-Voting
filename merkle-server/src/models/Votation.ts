@@ -110,4 +110,8 @@ export class Votation {
     getMerkleRoot(): string {
         return this.treeManager.getRoot();
     }
+
+    getMerkleProof(commitment: string): { pathElements: bigint[], pathIndices: number[] } {
+        return this.treeManager.getProof(commitment);
+    }
 }

@@ -10,18 +10,18 @@ import { DatabaseManager } from './managers/DatabaseManager';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.API_PORT || 3000;
+const PORT = process.env.API_PORT || 3156;
 
 const initDb = new DatabaseManager();
 initDb.initTables();
 initDb.close();
 
-const dataDir = process.env.DATA_PATH || path.join(__dirname, 'data');
+const dataDir = process.env.DATA_PATH || 'data'
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const treesDir = process.env.TREES_PATH || path.join(__dirname, 'data/trees');
+const treesDir = process.env.TREES_PATH || 'data/trees';
 if (!fs.existsSync(treesDir!)) {
   fs.mkdirSync(treesDir!, { recursive: true });
 }
@@ -31,8 +31,7 @@ app.use(morgan('dev'));
 
 app.use("/votations", votationsRouter);
 
-// TODO vote api call
-// TODO add api call log
+// TODO open and close votation automatically, and notify users ??
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

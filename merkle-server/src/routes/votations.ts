@@ -4,8 +4,6 @@ import { Votation } from '../models/Votation';
 
 const router = express.Router();
 
-// TODO change from json error to raw
-
 router.post("/new", async (req, res) => {
     try {
         const {
@@ -15,7 +13,7 @@ router.post("/new", async (req, res) => {
             startDate,
             endDate,
             candidates = [],
-            voters = [],
+            voters,
             createdBy = "system",
         } = req.body;
 
@@ -38,6 +36,10 @@ router.post("/new", async (req, res) => {
 
         if (parsedStartDate < creationDate) {
             return res.status(400).json({ error: 'Start date must be after creation date', startDate: parsedStartDate.toISOString(), creationDate: creationDate.toISOString() });
+        }
+
+        if (!voters || !Array.isArray(voters) || voters.length === 0) {
+            return res.status(400).json({ error: 'Voters array is required and cannot be empty' });
         }
 
         const db = new DatabaseManager();
@@ -88,6 +90,30 @@ router.get("/:name", async (req, res) => {
     }
 });
 
+router.get("/:name/voters/:commitment", async (req, res) => {
+    const { name, commitment } = req.params;
+
+    try {
+        const db = new DatabaseManager();
+        const votation = await db.getVotationByName(name);
+
+        if (!votation) {
+            return res.status(404).json({ error: `Votation "${name}" not found` });
+        }
+
+        const proof = votation.getMerkleProof(commitment);
+
+        return res.status(200).json({
+            merkleRoot: votation.getMerkleRoot(),
+            pathElements: proof.pathElements,
+            pathIndices: proof.pathIndices
+        });
+    } catch (error: any) {
+        console.error('Error fetching votation:', error);
+        return res.status(500).json({ error: error.message || 'Internal server error' });
+    }
+});
+
 router.get("/:name/candidates", async (req, res) => {
     const { name } = req.params;
 
@@ -126,7 +152,7 @@ router.get("/:name/voters", async (req, res) => {
     }
 });
 
-router.post("/:name/add-voter", async (req, res) => {
+router.post("/:name/voters/add", async (req, res) => {
     const { name } = req.params;
     const { commitment } = req.body;
 
@@ -151,7 +177,7 @@ router.post("/:name/add-voter", async (req, res) => {
     }
 });
 
-router.post("/:name/add-voters", async (req, res) => {
+router.post("/:name/voters/add", async (req, res) => {
     const { name } = req.params;
     const { commitments } = req.body;
 
@@ -176,7 +202,7 @@ router.post("/:name/add-voters", async (req, res) => {
     }
 });
 
-router.post("/:name/add-candidate", async (req, res) => {
+router.post("/:name/candidates/add", async (req, res) => {
     const { name } = req.params;
     const { candidate } = req.body;
 
@@ -201,7 +227,7 @@ router.post("/:name/add-candidate", async (req, res) => {
     }
 });
 
-router.post("/:name/add-candidates", async (req, res) => {
+router.post("/:name/candidates/add", async (req, res) => {
     const { name } = req.params;
     const { candidates } = req.body;
 
