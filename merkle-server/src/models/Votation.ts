@@ -1,5 +1,7 @@
-import { MerkleManager } from "./MerkleManager";
-import { DatabaseManager } from "./DatabaseManager";
+import { MerkleManager } from "../managers/MerkleManager";
+import { DatabaseManager } from "../managers/DatabaseManager";
+
+// TODO check/mantain coerence between database and object (instance)
 
 export class Votation {
 
@@ -12,7 +14,10 @@ export class Votation {
     public createdAt: Date;
 
     public isPublic: boolean;
-    public isOpen: boolean;
+    public isActive: boolean;
+
+    public candidates: { name: string; surname: string }[];
+    public voters: string[] = [];
 
     private treeManager: MerkleManager;
 
@@ -22,17 +27,22 @@ export class Votation {
         isPublic: boolean = true,
         startDate: Date,
         endDate: Date,
+        candidates: { name: string; surname: string }[] = [],
+        voters: string[] = [],
         createdBy: string = '',
         createdAt: Date = new Date()
     ) {
         this.name = name;
         this.description = description;
         this.isPublic = isPublic;
-        this.isOpen = false;
+        this.isActive = false;
         this.startDate = startDate || new Date();
         this.endDate = endDate || new Date();
         this.createdBy = createdBy;
         this.createdAt = createdAt;
+
+        this.candidates = candidates;
+        this.voters = voters;
 
         this.treeManager = new MerkleManager(this);
     }
@@ -57,20 +67,36 @@ export class Votation {
 
     async addVoter(commitment: string): Promise<void> {
         this.treeManager.addLeaf(commitment);
+        this.voters.push(commitment);
 
         const db = new DatabaseManager();
-        if (this.votationId) {
-            await db.updateMerkleRoot(this.votationId, this.treeManager.getRoot());
 
-            //TODO await this.db.addVoter(this.votationId, commitment);
-        } else {
-            throw new Error('Votation must be saved before adding voters');
-        }
+        db.addVoter(this.votationId!, commitment);
+        db.updateMerkleRoot(this.votationId!, this.getMerkleRoot());
 
         db.close();
     }
 
-    //TODO add candidates
+    async addVoters(commitments: string[]): Promise<void> {
+        this.treeManager.addLeaves(commitments);
+        this.voters.push(...commitments);
+
+        const db = new DatabaseManager();
+        db.addVoters(this.votationId!, commitments);
+        db.updateMerkleRoot(this.votationId!, this.getMerkleRoot());
+
+        db.close();
+    }
+
+    async addCandidate(name: string, surname: string): Promise<void> {
+        this.candidates.push({ name, surname });
+
+        const db = new DatabaseManager();
+        db.addCandidate(this.votationId!, name, surname);
+
+        db.close();
+    }
+
     getId(): number | undefined {
         return this.votationId;
     }
