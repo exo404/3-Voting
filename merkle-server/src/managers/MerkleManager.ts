@@ -8,7 +8,7 @@ import { exec } from 'child_process';
 
 const execAsync = promisify(exec);
 
-const TREES_PATH = process.env.TREES_PATH || path.join(__dirname, 'trees');
+const TREES_PATH = process.env.TREES_PATH || path.join(__dirname, 'data/trees');
 
 const CIRCUIT_WASM_PATH = "../zkproof/vote.wasm"
 const WITNESS_CALC_PATH = "../zkproof/witness_calculator.js"

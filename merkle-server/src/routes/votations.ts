@@ -2,12 +2,9 @@ import express from 'express';
 import { DatabaseManager } from '../managers/DatabaseManager';
 import { Votation } from '../models/Votation';
 
-const app = express();
 const router = express.Router();
 
-const db = new DatabaseManager();
-
-app.post("/new", async (req, res) => {
+router.post("/new", async (req, res) => {
     try {
         const {
             name,
@@ -37,6 +34,7 @@ app.post("/new", async (req, res) => {
             return res.status(400).json({ error: 'Start date must be after creation date' });
         }
 
+        const db = new DatabaseManager();
         const existingVotation = await db.getVotationByName(name);
 
         if (existingVotation) {
@@ -67,10 +65,11 @@ app.post("/new", async (req, res) => {
     }
 });
 
-app.get("/:name", async (req, res) => {
+router.get("/:name", async (req, res) => {
     const { name } = req.params;
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -84,10 +83,11 @@ app.get("/:name", async (req, res) => {
     }
 });
 
-app.get("/:name/candidates", async (req, res) => {
+router.get("/:name/candidates", async (req, res) => {
     const { name } = req.params;
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -102,10 +102,11 @@ app.get("/:name/candidates", async (req, res) => {
     }
 });
 
-app.get("/:name/voters", async (req, res) => {
+router.get("/:name/voters", async (req, res) => {
     const { name } = req.params;
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -120,7 +121,7 @@ app.get("/:name/voters", async (req, res) => {
     }
 });
 
-app.post("/:name/add-voter", async (req, res) => {
+router.post("/:name/add-voter", async (req, res) => {
     const { name } = req.params;
     const { commitment } = req.body;
 
@@ -129,6 +130,7 @@ app.post("/:name/add-voter", async (req, res) => {
     }
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -144,7 +146,7 @@ app.post("/:name/add-voter", async (req, res) => {
     }
 });
 
-app.post("/:name/add-voters", async (req, res) => {
+router.post("/:name/add-voters", async (req, res) => {
     const { name } = req.params;
     const { commitments } = req.body;
 
@@ -153,6 +155,7 @@ app.post("/:name/add-voters", async (req, res) => {
     }
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -168,7 +171,7 @@ app.post("/:name/add-voters", async (req, res) => {
     }
 });
 
-app.post("/:name/add-candidate", async (req, res) => {
+router.post("/:name/add-candidate", async (req, res) => {
     const { name } = req.params;
     const { candidate } = req.body;
 
@@ -177,6 +180,7 @@ app.post("/:name/add-candidate", async (req, res) => {
     }
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -192,7 +196,7 @@ app.post("/:name/add-candidate", async (req, res) => {
     }
 });
 
-app.post("/:name/add-candidates", async (req, res) => {
+router.post("/:name/add-candidates", async (req, res) => {
     const { name } = req.params;
     const { candidates } = req.body;
 
@@ -201,6 +205,7 @@ app.post("/:name/add-candidates", async (req, res) => {
     }
 
     try {
+        const db = new DatabaseManager();
         const votation = await db.getVotationByName(name);
 
         if (!votation) {
@@ -222,4 +227,5 @@ app.post("/:name/add-candidates", async (req, res) => {
     }
 });
 
+//TODO add utility method getVotationByName
 module.exports = router;
