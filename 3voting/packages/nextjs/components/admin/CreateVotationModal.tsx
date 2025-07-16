@@ -127,6 +127,7 @@ export const CreateVotationModal = ({ isOpen, onClose }: CreateVotationModalProp
       }
 
       const votersData = {
+        votationId: votationId,
         commitments: commitmentsList
       };
 

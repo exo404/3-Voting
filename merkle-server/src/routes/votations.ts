@@ -188,7 +188,7 @@ router.post("/:name/voter/add", async (req, res) => {
 
 router.post("/:name/voters/add", async (req, res) => {
     const { name } = req.params;
-    const { commitments } = req.body;
+    const { votationId, commitments } = req.body;
 
     console.log(commitments);
 
@@ -204,7 +204,13 @@ router.post("/:name/voters/add", async (req, res) => {
             return res.status(404).json({ error: `Votation "${name}" not found` });
         }
 
-        await votation.addVoters(commitments);
+        const votation_true = new Votation(votation.name, votation.description, votation.isPublic,
+            votation.startDate, votation.endDate, votation.candidates, votation.voters,
+            votation.createdBy, votation.createdAt
+        )
+
+        votation_true.votationId = votationId;
+        await votation_true.addVoters(commitments);
 
         return res.status(200).json({ message: 'Voters added successfully', commitments });
     } catch (error: any) {

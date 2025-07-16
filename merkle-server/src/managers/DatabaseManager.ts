@@ -192,7 +192,7 @@ export class DatabaseManager {
     async updateMerkleRoot(votationId: number, merkleRoot: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.db.run(
-                `UPDATE votations SET merkle_root = ? WHERE id = ?`,
+                `UPDATE votations SET merkleRoot = ? WHERE id = ?`,
                 [merkleRoot, votationId],
                 function (err) {
                     if (err) {
