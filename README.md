@@ -1,8 +1,6 @@
 # NapulETH-hackathon-2025
 
-## Doc
-
-### Architettura generale
+# Diagrammi di sequena iniziali
 
 ```mermaid
 sequenceDiagram
