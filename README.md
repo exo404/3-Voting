@@ -1,6 +1,6 @@
 # NapulETH-hackathon-2025
 
-# Diagrammi di sequena iniziali
+# Diagrammi di sequenza iniziali
 
 ```mermaid
 sequenceDiagram
