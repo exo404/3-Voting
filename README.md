@@ -1,4 +1,4 @@
-# NapulETH-hackathon-2025
+# 3-Voting, NapulETH Hackathon 2025
 
 # Diagrammi di sequenza iniziali
 
