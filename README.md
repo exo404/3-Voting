@@ -1,6 +1,6 @@
 # 3-Voting, NapulETH Hackathon 2025
 
-<img width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/13cf68e3-b5d8-4813-8254-e7bbaf05d3e0" />
+<img text-align=center width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/13cf68e3-b5d8-4813-8254-e7bbaf05d3e0" />
 
 # Diagrammi di sequenza iniziali
 
